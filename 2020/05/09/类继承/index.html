@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html>
+<head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/3.0.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- 页面元数据 -->
+  
+  <title>类继承 - 知其然，知其所以然</title>
+  
+    <meta name="keywords" content="learning,C++ primer plus">
+  
+
+  
+    <meta name="description" content="类继承
+本章内容包括：
+is-a 关系的继承。
+如何以公有方式从一个类派生出另一个类。
+保护访问。
+构造函数成员初始化列表。
+向上和向下强制转换。
+虚成员函数。
+早期（静态）联编与晚期（动态）联编。
+抽象基类。
+纯虚函数。
+何时及如何使用公有继承。
+
+
+">
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="知其然，知其所以然" type="application/atom+xml">
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13/css/all.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+
+  
+
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://ftp.bmp.ovh/imgs/2020/08/c2b4f291ea60e52e.png">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
+  
+
+  
+
+  <!-- import link -->
+  
+
+  
+  
+    
+<link rel="stylesheet" href="/css/style.css">
+
+  
+
+  
+  
+    <!-- ba -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+	  setTimeout(function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?cc3f1eee52d107cb77f1f0f75f1ea30b";
+		hm.defer=true;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+	  }, 5000);
+    })();
+    </script>
+  
+</head>
+
+<body>
+  <header class="l_header auto shadow blur" style='opacity: 0' >
+  <div class='container'>
+  <div class='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a class="s-comment fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://ftp.bmp.ovh/imgs/2020/08/c2b4f291ea60e52e.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+  <div class="l_body">
+    <div class="l_cover">
+
+  
+  
+      <div class='cover-wrapper post dock' style="display: none;">
+        
+          <div class='cover-backstretch'></div>
+        
+        <div class='cover-body'>
+  <div class='top'>
+    
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>博客</p>
+            </a>
+          
+            <a href="/categories/"
+              
+              
+              id="categories">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>分类</p>
+            </a>
+          
+            <a href="/tags/"
+              
+              
+              id="tags">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>标签</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>归档</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+      </div>
+  
+
+</div>
+
+    <div class='safearea'>
+      <div class='body-wrapper' id="pjax-container">
+        
+          <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+
+
+<div id="pjax-data" style="display: none">
+  <div id="pjax-ispage">true</div>
+  <div id="pjax-pageTitle">类继承</div>
+  <div id="pjax-enable-cover">true</div>
+  <div id="pjax-comment-path">none</div>
+  <div id="pjax-comment-placeholder">none</div>
+</div>
+
+
+<script>
+  // 处理封面 此时 jquery 还没加载
+  if ("none" == "none") { // 移除封面
+    document.getElementsByClassName('cover-wrapper')[0].style.display = "none";
+    document.getElementsByClassName('l_header', 'cover-wrapper')[0].classList.add("show");
+  } else {
+    if ("none" == "blog") { // 半屏
+      document.getElementsByClassName('cover-wrapper')[0].setAttribute('id', 'half');
+      document.getElementsByClassName('scroll-down')[0].style.display = "none";
+    } else if ("none" == "docs") { // 全屏
+      document.getElementsByClassName('cover-wrapper')[0].setAttribute('id', 'full');
+      document.getElementsByClassName('scroll-down')[0].style.display = "";
+    }
+    document.getElementsByClassName('cover-wrapper')[0].style.display = "";
+    document.getElementsByClassName('l_header', 'cover-wrapper')[0].classList.remove("show");
+  }
+</script>
+
+
+        
+        
+
+<div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box reveal md shadow article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <div class='article-header'>
+    
+      
+      <div class="article-meta" id="top">
+        
+        
+        
+          <h1 class="title">
+            <a href="/2020/05/09/%E7%B1%BB%E7%BB%A7%E6%89%BF/">
+              类继承
+            </a>
+          </h1>
+        
+        <div class='new-meta-box'>
+          
+            
+          
+            
+              
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>quzard</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/C/">C++</a><span class="sep"></span><a class="category-link" href="/categories/C/C-primer-plus/">C++ primer plus</a><span class="sep"></span><a class="category-link" href="/categories/C/C-primer-plus/%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0/">第十三章</a>
+    </a>
+  </div>
+
+
+            
+          
+            
+              
+  <div class="new-meta-item wordcount">
+    <a class='notlink'>
+      <i class="fas fa-keyboard fa-fw" aria-hidden="true"></i>
+      <p>字数：4.8k字</p>
+    </a>
+  </div>
+  <div class="new-meta-item readtime">
+    <a class='notlink'>
+      <i class="fas fa-hourglass-half fa-fw" aria-hidden="true"></i>
+      <p>时长：18分钟</p>
+    </a>
+  </div>
+
+
+            
+          
+            
+              <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2020年5月9日</p>
+  </a>
+</div>
+
+            
+          
+            
+          
+        </div>
+      </div>
+    
+  </div>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          
+          <h1 id="类继承"><a href="#类继承" class="headerlink" title="类继承"></a>类继承</h1><ul>
+<li>本章内容包括：<ul>
+<li>is-a 关系的继承。</li>
+<li>如何以公有方式从一个类派生出另一个类。</li>
+<li>保护访问。</li>
+<li>构造函数成员初始化列表。</li>
+<li>向上和向下强制转换。</li>
+<li>虚成员函数。</li>
+<li>早期（静态）联编与晚期（动态）联编。</li>
+<li>抽象基类。</li>
+<li>纯虚函数。</li>
+<li>何时及如何使用公有继承。</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+
+<p>类继承——它能够从已有的类派生出新的类，而派生类继承了原有类（称为基类）的特征，包括方法。</p>
+<ul>
+<li>可以在原有类的基础上添加功能。例如，对于数组类，可以添加数学运算。</li>
+<li>可以给类添加数据。例如，对于字符串类可以派生出一个类，并添加指定字符串显示颜色的数据成员。</li>
+<li>可以修改类方法的行为。例如，对于代表提供给飞机乘客的服务的passenger类，可以派生出提供给头等舱服务的FirstPassenger类。</li>
+</ul>
+<h2 id="13-1-一个简单的基类"><a href="#13-1-一个简单的基类" class="headerlink" title="13.1 一个简单的基类"></a>13.1 一个简单的基类</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TableTennisPlayer</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">string</span> firstname;</span><br><span class="line">    <span class="built_in">string</span> lastname;</span><br><span class="line">    <span class="keyword">bool</span> hasTable;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    TableTennisPlayer (<span class="keyword">const</span> <span class="built_in">string</span> &amp; fn = <span class="string">&quot;none&quot;</span>,</span><br><span class="line">                       <span class="keyword">const</span> <span class="built_in">string</span> &amp; ln = <span class="string">&quot;none&quot;</span>, <span class="keyword">bool</span> ht = <span class="literal">false</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">这将首先为firstname调用string的默认构造函数，再调用string的赋值运算符将firstname设置为fn</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">TableTennisPlayer::TableTennisPlayer (<span class="keyword">const</span> <span class="built_in">string</span> &amp; fn, </span><br><span class="line">    <span class="keyword">const</span> <span class="built_in">string</span> &amp; ln, <span class="keyword">bool</span> ht) &#123;</span><br><span class="line">            firstname = fn;</span><br><span class="line">            lastname = ln;</span><br><span class="line">            hasTable = ht;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="comment">/*初始化列表语法</span></span><br><span class="line"><span class="comment">初始化列表语法可减少一个步骤，它直接使用string的复制构造函数将firstname 初始化为fn</span></span><br><span class="line"><span class="comment">TableTennisPlayer::TableTennisPlayer (const string &amp; fn, </span></span><br><span class="line"><span class="comment">    const string &amp; ln, bool ht) : firstname(fn),</span></span><br><span class="line"><span class="comment">        lastname(ln), hasTable(ht) &#123;&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>给一个类派生出另一个类时，原始类称为基类，继承类成为派生类。</p>
+<ul>
+<li><p>公有派生(public)</p>
+<p>派生类对象包含基类对象。使用公有派生，基类的公有成员将成为派生类的公有成员；基类的私有部分(private)也将成为派生类的一部分，但只能通过基类的公有和保护方法访问</p>
+<ul>
+<li>派生类对象<strong>存储了基类的数据成员</strong>（派生类继承了积累的实现）</li>
+<li>派生类对象<strong>可以使用基类的方法</strong>（派生类继承了基类的接口）</li>
+<li>派生类<strong>需要自己的构造函数</strong>。</li>
+<li>派生类可以<strong>根据需要添加额外的数据成员和成员函数</strong>。</li>
+<li>构造函数必须<strong>给新成员(如果有的话)和继承的成员提供数据</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="13-1-2构造函数：访问权限的考虑"><a href="#13-1-2构造函数：访问权限的考虑" class="headerlink" title="13.1.2构造函数：访问权限的考虑"></a>13.1.2构造函数：访问权限的考虑</h3><ul>
+<li><p><strong>派生类不能直接访问基类的私有成员，而必须通过基类方法进行访问。</strong><br>派生类不能直接设置继承的成员，而必须使用基类的公有方法来访问私有的基类成员。具体地说，派生类构造函数必须使用基类构造函数。</p>
+</li>
+<li><p><strong>创建派生类对象时，程序首先创建基类对象。</strong></p>
+<p>从概念上说，这意味着基类对象应当在程序进入派生类构造函数之前被创建。<strong>C+ +使用成员初始化列表语法来完成这种工作。</strong></p>
+</li>
+<li><p><strong>非构造函数不能使用成员初始化列表语法，但派生类方法可以调用公有的基类方法</strong></p>
+<p>例如，派生类构造函数在初始化基类私有数据时，采用的是成员初始化列表语法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RatedPlayer 继承于 TableTennisPlayer</span></span><br><span class="line"><span class="comment">// class RatedPlayer : public TableTennisPlayer</span></span><br><span class="line">RatedPlayer: : RatedPlayer (<span class="keyword">unsigned</span> <span class="keyword">int</span> r, <span class="keyword">const</span> <span class="built_in">string</span> &amp; fn, <span class="keyword">const</span> <span class="built_in">string</span> &amp; <span class="number">1</span>n, <span class="keyword">bool</span> ht) : TableTennisPlayer(fn， <span class="number">1</span>n, ht)</span><br><span class="line">&#123;</span><br><span class="line">    rating = r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果省略成员初始化列表（不调用基类构造函数），程序将使用默认的基类构造函数</p>
+</li>
+<li><p>有关派生类构造函数的要点如下:</p>
+<ul>
+<li>首<strong>先创建基类对象</strong></li>
+<li>派生类构造函数应通过成员初始化列表将基类信息传递给基类构造函数，<strong>根据继承顺序初始化，而不是初始化列表中的顺序</strong></li>
+<li>派生类构造函数应初始化派生类新增的数据成员。<strong>根据声明顺序初始化，而不是初始化列表中的顺序</strong></li>
+<li><strong>释放对象的顺序与创建对象的顺序相反</strong>，首先执行派生类的析构函数，然后自动调用基类的析构函数。</li>
+</ul>
+</li>
+<li><p>派生类并不能直接访问基类的私有数据，必须使用基类的公有方法才能访问这些数据</p>
+</li>
+</ul>
+<p>  再次总结</p>
+<ol>
+<li><p><strong>创建派生类对象时，程序首先调用基类构造函数</strong></p>
+<p>基类构造函数负责初始化继承的数据成员</p>
+</li>
+<li><p><strong>然后再调用派生类构造函数。</strong></p>
+<p>派生类构造函数主要用于初始化新增的数据成员。</p>
+</li>
+<li><p><strong>派生类的构造函数总是调用一个基类构造函数。</strong></p>
+<p>可以使用初始化器列表语法指明要使用的基类构造函数，否则将使用默认的基类构<br>造函数。</p>
+</li>
+<li><p><strong>派生类对象过期时，程序将首先调用派生类析构函数，然后再调用基类析构函数。</strong></p>
+</li>
+</ol>
+<ul>
+<li>虛基类外(参见第14章)，类只能将值传递回相邻的基类，但后者可以使用相同的机制将信息传递给相邻的基类，依此类推。如果没有在成员初始化列表中提供基类构造函数，程序将使用默认的基类构造函数。成员初始化列表只能用于构造函数。</li>
+</ul>
+<h3 id="13-1-3派生类和基类之间的特殊关系"><a href="#13-1-3派生类和基类之间的特殊关系" class="headerlink" title="13.1.3派生类和基类之间的特殊关系"></a>13.1.3派生类和基类之间的特殊关系</h3><ul>
+<li>派生类对象可以使用基类的方法，条件是不是私有的</li>
+<li>基类指针可以在不进行显式类型转换的情况下指向派生类对象</li>
+<li>基类引用可以在不进行显示类型转换的情况下引用派生类对象</li>
+<li>基类指针或引用只能用于调用基类方法，因此,不能来调用派生类的方法。</li>
+<li>不可以将基类对象和地址赋给派生类引用和指针</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span>&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span><span class="keyword">public</span> A&#123;&#125;;</span><br><span class="line"><span class="function">B <span class="title">temp_1</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line"><span class="function">A <span class="title">temp_2</span><span class="params">(temp_1)</span></span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">要初始化temp_2,匹配的构造函数的原型如下:</span></span><br><span class="line"><span class="comment">A (const B&amp;);</span></span><br><span class="line"><span class="comment">类定义中没有这样的构造函数，但存在隐式复制构造函数</span></span><br><span class="line"><span class="comment">A(const A&amp;);</span></span><br><span class="line"><span class="comment">形参是基类引用，因此他可以引用派生类</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="13-2继承：-is-a关系"><a href="#13-2继承：-is-a关系" class="headerlink" title="13.2继承： is-a关系"></a>13.2继承： is-a关系</h2><p>公有继承</p>
+<h2 id="13-3多态公有继承"><a href="#13-3多态公有继承" class="headerlink" title="13.3多态公有继承"></a>13.3多态公有继承</h2><p>实现多态公有继承方法</p>
+<ul>
+<li>在派生类中重新定义基类的方法</li>
+<li>使用虚方法virtual</li>
+</ul>
+<p>如果方法是通过引用或指针而不是对象调用的，它将确定使用哪一种方法。</p>
+<ul>
+<li><p>如果没有使用关键字virtual,程序将<strong>根据引用类型或指针类型</strong>选择方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span><span class="keyword">public</span> A&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">A <span class="title">temp_1</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">B <span class="title">temp_2</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">A* P_1 = &amp; temp_1;</span><br><span class="line">P_1 -&gt; <span class="built_in">print</span>(); <span class="comment">// 调用 A::print()</span></span><br><span class="line">A* P_2 = &amp; temp_2;</span><br><span class="line">P_2 -&gt; <span class="built_in">print</span>(); <span class="comment">// 调用 A::print()</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果使用了virtual,程序将<strong>根据引用或指针指向的对象的类型</strong>来选择方法。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span><span class="keyword">public</span> A&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function">A <span class="title">temp_1</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function">B <span class="title">temp_2</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">A* P_1 = &amp; temp_1;</span><br><span class="line">P_1 -&gt; <span class="built_in">print</span>(); <span class="comment">// 调用 A::print()</span></span><br><span class="line">A* P_2 = &amp; temp_2;</span><br><span class="line">P_2 -&gt; <span class="built_in">print</span>(); <span class="comment">// 调用 B::print()</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><strong>方法在基类中被声明为虚的后，它在派生类中将自动成为虚方法</strong>。然而，在派生类声明中使用关<br>键字virual来指出哪此函数县虎函数也不失为一个好办法。（<strong>派生类不一定要加virtual，基类一定要；virtual只需要在原型中写出，但定义中不需要写，和friend一样</strong>）</p>
+<p><strong>只要派生类的函数与基类的同原型（函数返回类型、函数名和形参列表），自动转为虚函数，不需要声明virtual，如果不同的话就叫作函数重载了；虚函数只能是类中成员函数且不能是静态，有隐藏的this指针</strong></p>
+<ul>
+<li><strong>基类声明虚析构函数。这样做是为了确保释放派生对象时，按正确的顺序调用析构函数。</strong><ul>
+<li>使用delete释放由new分配的对象时，<strong>如果析构函数不是虚的，则将只调用对应于指针类型的析构函数。如果析构函数是虚的，将调用相应对象类型的析构函数</strong>。因此，<strong>如果基类指针指向的是派生类对象，将调用派生类 的析构函数，然后自动调用基类的析构函数</strong>。因此，<strong>使用虚析构函数可以确保正确的析构函数序列被调用</strong></li>
+</ul>
+</li>
+<li>注意:如果要在派生类中重新定义基类的方法，通常应将基类方法声明为虚的。这样，程序将根据对象类型而不是引用或指针的类型来选择方法版本。为基类声明一个虚析构函数也是一种惯例。</li>
+</ul>
+<h3 id="13-4-1指针和引用类型的兼容性"><a href="#13-4-1指针和引用类型的兼容性" class="headerlink" title="13.4.1指针和引用类型的兼容性"></a>13.4.1指针和引用类型的兼容性</h3><ul>
+<li><p>在C++中，动态联编与通过指针和引用调用方法相关，从某种程度上说，这是由继承控制的。</p>
+</li>
+<li><p>将派生类引用或指针转换为基类引用或指针被称为向上强制转换(upcasting),这使公有继承不需要进行显式类型转换。该规则是is-a 关系的一部分。 BrassPlus 对象都是Brass对象，因为它继承了Brass对象</p>
+</li>
+<li><p>相反的过程——将 基类指针或引用转换为派生类指针或引用——称 为向下强制转换。如果不使用显式类型转换，则向下强制转换是不允许的。原因是is-a 关系通常是不可逆的。派生类可以新</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Employee</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">char</span> nane[<span class="number">401</span>;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> show <span class="title">nane</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Singer</span> :</span> <span class="keyword">public</span> Employee&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">range</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line">Employee veep;</span><br><span class="line">Singer trala;</span><br><span class="line">Employee pe= &amp;trala; <span class="comment">// 允许向上隐式类型转换</span></span><br><span class="line">Singer* ps = (Singer *) &amp;veep; <span class="comment">// 必须向下显式类型转换</span></span><br><span class="line">pe-&gt;<span class="function">show <span class="title">nane</span><span class="params">()</span></span>; <span class="comment">// 向上转换带来安全操作，因为Singer是Employee(每个singer都继承姓名)</span></span><br><span class="line">ps-&gt;range(); <span class="comment">//向下转换可能带来不安全的操作，因为Employee并不是Singer(Eaployee没有有range()方法)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果要在派生类中重新定义基类的方法，则将它设置为虚方法;否则，设置为非虚方法。</p>
+</li>
+</ul>
+<h3 id="13-4-3有关虚函数注意事项"><a href="#13-4-3有关虚函数注意事项" class="headerlink" title="13.4.3有关虚函数注意事项"></a>13.4.3有关虚函数注意事项</h3><h4 id="1-构造函数"><a href="#1-构造函数" class="headerlink" title="1.  构造函数"></a>1.  构造函数</h4><p><strong>构造函数不能是虚函数。</strong>创建派生类对象时，将调用派生类的构造函数，而不是基类的构造函数，然后，派生类的构造函数将使用基类的一个构造函数，这种顺序不同于继承机制。因此，派生类不继承基类的构造函数，所以将类构造函数声明为虚的没什么意义。</p>
+<h4 id="2-析构函数"><a href="#2-析构函数" class="headerlink" title="2.  析构函数"></a>2.  析构函数</h4><p><strong>析构函数应当是虚函数，除非类不用做基类。</strong>例如，假设Employee是基类，Singer 是派生类,并添加一个char *成员，该成员指向由new分配的内存。当Singer对象过期时，必须调用~Singer( )析构函数来释放内存。</p>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Employee * pe = <span class="keyword">new</span> Singer; </span><br><span class="line"><span class="keyword">delete</span> pe;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果使用默认的静态联编，delete 语句将调用~Employee( )析构函数。这将释放由Singer 对象中的Employee部分指向的内存，但不会释放新的类成员指向的内存。</li>
+</ul>
+<ul>
+<li>如果析构函数是虚的，则上述代码将先调用<del>Singer析构函数释放由Singer组件指向的内存,然后,调用</del>Employee()析构函数来释放由Employee组件指向的内存。<br>这意味着，即使基类不需要显式析构函数提供服务，也不应依赖于默认析构函数，而应提供虚析构函数，即使它不执行任何操作: virtual ~BaseClass() { }</li>
+<li>给类定义一个虚析构函数并非错误，即使这个类不用做基类:这只是一个效率方面的问题。<br>通常应给基类提供一个虚析构函数，即使它并不需要析构函数。</li>
+</ul>
+<h4 id="3-友元"><a href="#3-友元" class="headerlink" title="3.   友元"></a>3.   友元</h4><p>   友元不能是虚函数，因为友元不是类成员，而只有成员才能是虚函数。可以通过让友元函数使用虚成员函数来解决。</p>
+<h4 id="4-没有重新定义"><a href="#4-没有重新定义" class="headerlink" title="4.  没有重新定义"></a>4.  没有重新定义</h4><p>   如果派生类没有重新定义函数，将使用该函数的基类版本。如果派生类位于派生链中，则将使用最新的虚函数版本，例外的情况是基类版本是隐藏的。</p>
+<h4 id="5-重新定义将隐藏方法"><a href="#5-重新定义将隐藏方法" class="headerlink" title="5.  重新定义将隐藏方法"></a>5.  重新定义将隐藏方法</h4>   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">Dwelling</span>&#123;</span></span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">      <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">showperks</span><span class="params">(<span class="keyword">int</span> a)</span> <span class="keyword">const</span></span>;</span><br><span class="line">   &#125;;</span><br><span class="line">   <span class="class"><span class="keyword">class</span> <span class="title">Hovel</span> :</span> <span class="keyword">public</span> Dweling&#123;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">      <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">showperks</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">   &#125;;</span><br><span class="line">   Hovel trump;</span><br><span class="line">   trump.showperks() ;<span class="comment">// valid</span></span><br><span class="line">   trump.showperks(<span class="number">5</span>) ;<span class="comment">// invalid</span></span><br><span class="line">   trump.Dwelling::showperks(<span class="number">5</span>) ;<span class="comment">// valid</span></span><br><span class="line">   </span><br><span class="line">   <span class="comment">/*</span></span><br><span class="line"><span class="comment">   新定义将showperks( )定义为一个不接受任何参数的函数。重新定义不会生成函数的两个重载版本，而是隐藏了接受一个int参数的基类版本。</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>重新定义继承的方法并不是重载。如果在派生类中重新定义函数，将不是使用相同的函数特征标覆盖基类声明，而是隐藏同名的基类方法，不管参数特征标如何。</li>
+<li>如果派生类的函数与基类的函数同名，但是参数不同。此时，无论有无virtual关键字，积累的函数将被隐藏（注意别与重载混淆）。</li>
+<li>如果派生类的函数与积累的函数同名，并且参数也相同，但是基类函数没有virtual关键字。此时，基类的函数被隐藏（注意别与覆盖混淆）。</li>
+</ul>
+</blockquote>
+<p>   这引出了两条经验规则:</p>
+<ul>
+<li>第一,如果重新定义继承的方法，应确保与原来的原型完全相同，但如果返回类型是基类引用或指针，则可以修改为指向派生类的引用或指针(这种例外是新出现的)。这种特性被称为返回类型协变(covariance of return type)，因为允许返回类型随类类型的变化而变化</li>
+</ul>
+<p>   这种例外只适用于返回值，而不适用于参数。</p>
+<ul>
+<li>第二，如果基类声明被重载了，则应在派生类中重新定义所有的基类版本。</li>
+</ul>
+<p>   如果只重新定义一个版本，则另外两个版本将被隐藏，派生类对象将无法使用它们。注意，如果不需要修改，则新定义可只调用基类版本</p>
+   <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Hovel: : showperks() <span class="keyword">const</span> &#123;Dwelling::showperks() ;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="13-5访问控制-protected"><a href="#13-5访问控制-protected" class="headerlink" title="13.5访问控制: protected"></a>13.5访问控制: protected</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span>&#123;</span></span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">get_n</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>关键字protected 与private 相似，在类外只能用公有类成员来访问protected部分中的类成员。</p>
+</li>
+<li><p>private 和protected之间的区别只有在基类派生的类中才会表现出来。</p>
+</li>
+<li><p>派生类的成员可以直接访问基类的保护成员，但不能直接访问基类的私有成员。</p>
+<ul>
+<li><p>对于<strong>外部</strong>世界来说,   保护成员的行为  ≈  私有成员的行为</p>
+</li>
+<li><p>对于<strong>派生类</strong>来说，    保护成员的行为  ≈  公有成员的行为</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>最好对类数据成员采用私有访问控制，不要使用保护访问控制</p>
+<p>同时通过基类方法使派生类能够访问基类数据。<br>然而，对于成员函数来说，保护访问控制很有用，它让派生类能够访问公众不能使用的内部函数。</p>
+<h2 id="13-6抽象基类（不一定要虚函数）-纯虚函数"><a href="#13-6抽象基类（不一定要虚函数）-纯虚函数" class="headerlink" title="13.6抽象基类（不一定要虚函数）             纯虚函数"></a>13.6抽象基类（不一定要虚函数）             纯虚函数</h2><p>C+ +通过使用纯虚函数(pure vitual function)提供未实现的函数。纯虚函数声明的结尾处为=0</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseEllipse</span>&#123;</span></span><br><span class="line"><span class="keyword">private</span> :</span><br><span class="line">    <span class="keyword">double</span> x;</span><br><span class="line">    <span class="keyword">double</span> y; </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    BaseEllipse(<span class="keyword">double</span> x0 = <span class="number">0</span>, <span class="keyword">double</span> y0 = <span class="number">0</span>) : x(x0) ,y(y0) &#123;&#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~BaseEllipse() &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Move</span><span class="params">(<span class="keyword">int</span> nx, ny)</span> </span>&#123; X= nx; y= ny; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">double</span> <span class="title">Area</span><span class="params">()</span> <span class="keyword">const</span> </span>= <span class="number">0</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>当类声明中包含纯虚函数时，则不能创建该类的对象。包含纯虚函数的类只用作基类。</strong></p>
+<p><strong>要成为真正的ABC（抽象基类）,必须至少包含一个纯虚函数。</strong>即原型中的=0使虚函数成为纯虚函数，比如这里的方法Area()没有定义。</p>
+<p><strong>C++甚至允许纯虚函数有定义</strong>。例如，也许所有的基类方法都与Move()一样，可以在基类中进行定义，但您仍需要将这个类声明为抽象的。在这种情况下，可以将原型声明为虚的:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Move</span><span class="params">(<span class="keyword">int</span> nx，ny)</span> </span>= <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这将使基类成为抽象的，但您仍可以在实现文件中提供方法的定义:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> BaseEllipse: :Move(<span class="keyword">int</span> nx，ny) &#123; x = nx;y= ny; &#125;</span><br></pre></td></tr></table></figure>
+
+<p>总之，<strong>在原型中使用=0指出类是一个抽象基类，在类中可以不定义该函数。</strong></p>
+<h2 id="13-7-继承和动态内存分配"><a href="#13-7-继承和动态内存分配" class="headerlink" title="13.7 继承和动态内存分配"></a>13.7 继承和动态内存分配</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">baseDMA</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">char</span> * label;</span><br><span class="line">    <span class="keyword">int</span> rating;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    baseDMA(<span class="keyword">const</span> <span class="keyword">char</span> * l = <span class="string">&quot;null&quot;</span>, <span class="keyword">int</span> r = <span class="number">0</span>);</span><br><span class="line">    baseDMA(<span class="keyword">const</span> baseDMA &amp; rs);</span><br><span class="line">    <span class="keyword">virtual</span> ~baseDMA();</span><br><span class="line">    baseDMA &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> baseDMA &amp; rs);</span><br><span class="line">    <span class="keyword">friend</span> <span class="built_in">std</span>::ostream &amp; <span class="keyword">operator</span>&lt;&lt;(<span class="built_in">std</span>::ostream &amp; os, <span class="keyword">const</span> baseDMA &amp; rs);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">lacksDMA</span> :</span><span class="keyword">public</span> baseDMA</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">enum</span> &#123; COL_LEN = <span class="number">40</span>&#125;;</span><br><span class="line">    <span class="keyword">char</span> color[COL_LEN];</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    lacksDMA(<span class="keyword">const</span> <span class="keyword">char</span> * c = <span class="string">&quot;blank&quot;</span>, <span class="keyword">const</span> <span class="keyword">char</span> * l = <span class="string">&quot;null&quot;</span>, <span class="keyword">int</span> r = <span class="number">0</span>);</span><br><span class="line">    lacksDMA(<span class="keyword">const</span> <span class="keyword">char</span> * c, <span class="keyword">const</span> baseDMA &amp; rs);</span><br><span class="line">    <span class="keyword">friend</span> <span class="built_in">std</span>::ostream &amp; <span class="keyword">operator</span>&lt;&lt;(<span class="built_in">std</span>::ostream &amp; os, <span class="keyword">const</span> lacksDMA &amp; rs);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>复制类成员或继承的类组件时，则是使用该类的复制构造函数完成的。</strong>所以，lacksDMA类的默认复制构造函数将使用显式baseDMA复制构造函数baseDMA (const baseDMA &amp; rs)来复制lacksDMA对象的baseDMA部分。</p>
+</li>
+<li><p>对于赋值来说，也是如此。<strong>类的默认赋值运算符将自动使用基类的赋值运算符baseDMA &amp; operator= (const baseDMA &amp; rs) 来对基类组件进行赋值。</strong></p>
+</li>
+<li><p><strong>类的默认析构函数会将自动使用基类的析构函数~baseDMA()来对类成员或继承的类组件析构。</strong>故其自身的职责是对派生类构造函数执行工作的部分进行清理。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">hasDMA</span> :</span><span class="keyword">public</span> baseDMA</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">char</span> * style;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    hasDMA(<span class="keyword">const</span> <span class="keyword">char</span> * s = <span class="string">&quot;none&quot;</span>, <span class="keyword">const</span> <span class="keyword">char</span> * l = <span class="string">&quot;null&quot;</span>,</span><br><span class="line">              <span class="keyword">int</span> r = <span class="number">0</span>);</span><br><span class="line">    hasDMA(<span class="keyword">const</span> <span class="keyword">char</span> * s, <span class="keyword">const</span> baseDMA &amp; rs);</span><br><span class="line">    hasDMA(<span class="keyword">const</span> hasDMA &amp; hs);</span><br><span class="line">    ~hasDMA();</span><br><span class="line">    hasDMA &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> hasDMA &amp; rs);  </span><br><span class="line">    <span class="keyword">friend</span> <span class="built_in">std</span>::ostream &amp; <span class="keyword">operator</span>&lt;&lt;(<span class="built_in">std</span>::ostream &amp; os, </span><br><span class="line">                                     <span class="keyword">const</span> hasDMA &amp; rs);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="复制构造函数"><a href="#复制构造函数" class="headerlink" title="复制构造函数"></a>复制构造函数</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">hasDMA复制构造函数只能访问hasDMA的数据，因此它必须调用baseDMA复制构造函数来处理共享的baseDMA数据:</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">hasDMA: : hasDMA (<span class="keyword">const</span> hasDMA &amp; hs) : baseDMA (hs)&#123;</span><br><span class="line">style = <span class="keyword">new</span> <span class="keyword">char</span> [<span class="built_in">std</span>: :<span class="built_in">strlen</span> (hs.style) + <span class="number">1</span>];</span><br><span class="line"><span class="built_in">std</span>: :<span class="built_in">strcpy</span>(style，hs.style) ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的一点是， <strong>成员初始化列表将一个hasDMA引用传递给baseDMA构造函数</strong>。</p>
+<p>没有参数类型为hasDMA引用的baseDMA构造函数，也不需要这样的构造函数。</p>
+<p>因为<strong>复制构造函数baseDMA有一个baseDMA引用参数，而基类引用可以指向派生类型。</strong></p>
+<p>因此，baseDMA 复制构造函数<strong>将使用   const hasDMA &amp; hs参数的baseDMA部分来构造新对象的baseDMA部分。</strong></p>
+<h3 id="赋值运算符重载"><a href="#赋值运算符重载" class="headerlink" title="赋值运算符重载"></a>赋值运算符重载</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hasDMA &amp; hasDMA: : <span class="keyword">operator</span>= (<span class="keyword">const</span> hasDMA &amp; hs)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == &amp;hs&#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    baseDMA: :<span class="keyword">operator</span>=(hs); <span class="comment">// 通过使用函数表示法，而不是运算符表示法，可以使用作用域解析运算法</span></span><br><span class="line">    <span class="keyword">delete</span> [] style;</span><br><span class="line">    style = <span class="keyword">new</span> <span class="keyword">char</span> [<span class="built_in">std</span>: :<span class="built_in">strlen</span>(hs.sty1e) + <span class="number">1</span>] ;</span><br><span class="line">    <span class="built_in">std</span>: :<span class="built_in">strcpy</span> (style，hs.style) ;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="友元"><a href="#友元" class="headerlink" title="友元"></a>友元</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>: :ostream &amp; <span class="keyword">operator</span>&lt;&lt; (<span class="built_in">std</span>: :ostream &amp; os，<span class="keyword">const</span> hasDMA &amp; hs)&#123;</span><br><span class="line">    os &lt;&lt; (<span class="keyword">const</span> baseDMA &amp;) hs;</span><br><span class="line">    os &lt;&lt; <span class="string">&quot;Style: ”&lt;&lt; hs.style &lt;&lt; endl;</span></span><br><span class="line"><span class="string">    return os;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+          
+            <div class='article_footer'>
+              
+                
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+<section class="widget copyright  desktop mobile">
+  <div class='content'>
+    
+      <blockquote>
+        
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+          
+        
+          
+            <p>本文永久链接是：<a href=http://diudiu6.com/2020/05/09/%E7%B1%BB%E7%BB%A7%E6%89%BF/>http://diudiu6.com/2020/05/09/%E7%B1%BB%E7%BB%A7%E6%89%BF/</a></p>
+          
+        
+      </blockquote>
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+<section class="widget qrcode  desktop mobile">
+  
+
+  <div class='content article-entry'>
+    
+  </div>
+</section>
+
+  
+
+
+              
+            </div>
+          
+        </div>
+        
+          
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-05-09T20:59:01+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2020年5月9日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/learning/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>learning</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/C-primer-plus/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>C++ primer plus</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item wordcount">
+    <a class='notlink'>
+      <i class="fas fa-keyboard fa-fw" aria-hidden="true"></i>
+      <p>字数：4.8k字</p>
+    </a>
+  </div>
+  <div class="new-meta-item readtime">
+    <a class='notlink'>
+      <i class="fas fa-hourglass-half fa-fw" aria-hidden="true"></i>
+      <p>时长：18分钟</p>
+    </a>
+  </div>
+
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://diudiu6.com/2020/05/09/%E7%B1%BB%E7%BB%A7%E6%89%BF/&title=类继承 - 知其然，知其所以然&summary=类继承
+本章内容包括：
+is-a 关系的继承。
+如何以公有方式从一个类派生出另一个类。
+保护访问。
+构造函数成员初始化列表。
+向上和向下强制转换。
+虚成员函数。
+早期（静态）联编与晚期（动态）联编。
+抽象基类。
+纯虚函数。
+何时及如何使用公有继承。
+
+
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://diudiu6.com/2020/05/09/%E7%B1%BB%E7%BB%A7%E6%89%BF/&title=类继承 - 知其然，知其所以然&summary=类继承
+本章内容包括：
+is-a 关系的继承。
+如何以公有方式从一个类派生出另一个类。
+保护访问。
+构造函数成员初始化列表。
+向上和向下强制转换。
+虚成员函数。
+早期（静态）联编与晚期（动态）联编。
+抽象基类。
+纯虚函数。
+何时及如何使用公有继承。
+
+
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://diudiu6.com/2020/05/09/%E7%B1%BB%E7%BB%A7%E6%89%BF/&title=类继承 - 知其然，知其所以然&summary=类继承
+本章内容包括：
+is-a 关系的继承。
+如何以公有方式从一个类派生出另一个类。
+保护访问。
+构造函数成员初始化列表。
+向上和向下强制转换。
+虚成员函数。
+早期（静态）联编与晚期（动态）联编。
+抽象基类。
+纯虚函数。
+何时及如何使用公有继承。
+
+
+"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+        
+        
+          <div class="prev-next">
+            
+              <a class='prev' href='/2020/08/20/1-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>LeetCode——1. 两数之和</p>
+                <p class='content'>难度（简单）给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+你可以假设每种输入只会对应一个答案。但是，数组中同一个元...</p>
+              </a>
+            
+            
+              <a class='next' href='/2019/05/22/%E7%AC%A6%E5%90%88python%E9%A3%8E%E6%A0%BC%E7%9A%84%E5%AF%B9%E8%B1%A1/'>
+                <p class='title'>符合python风格的对象<i class="fas fa-chevron-right" aria-hidden="true"></i></p>
+                <p class='content'>得益于 Python 数据模型，自定义类型的行为可以像内置类型那样自然。实现如自然的行为，靠的不是继承，而是鸭子类型（duck typing）：我们只需按照预定行为实对象所需的方法即可。
+
+
+1...</p>
+              </a>
+            
+          </div>
+        
+      </section>
+    </article>
+  
+
+  
+    
+
+  <article class="post white-box reveal comments shadow">
+    <section class="article typo">
+      <p ct><i class='fas fa-comments'></i> 评论</p>
+      
+      <section id="comments">
+        <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+      </section>
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+</div>
+<aside class='l_side'>
+  
+  
+
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#13-1-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%9F%BA%E7%B1%BB"><span class="toc-text">13.1 一个简单的基类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-2%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%9A%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E7%9A%84%E8%80%83%E8%99%91"><span class="toc-text">13.1.2构造函数：访问权限的考虑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-1-3%E6%B4%BE%E7%94%9F%E7%B1%BB%E5%92%8C%E5%9F%BA%E7%B1%BB%E4%B9%8B%E9%97%B4%E7%9A%84%E7%89%B9%E6%AE%8A%E5%85%B3%E7%B3%BB"><span class="toc-text">13.1.3派生类和基类之间的特殊关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-2%E7%BB%A7%E6%89%BF%EF%BC%9A-is-a%E5%85%B3%E7%B3%BB"><span class="toc-text">13.2继承： is-a关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-3%E5%A4%9A%E6%80%81%E5%85%AC%E6%9C%89%E7%BB%A7%E6%89%BF"><span class="toc-text">13.3多态公有继承</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#13-4-1%E6%8C%87%E9%92%88%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="toc-text">13.4.1指针和引用类型的兼容性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-4-3%E6%9C%89%E5%85%B3%E8%99%9A%E5%87%BD%E6%95%B0%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">13.4.3有关虚函数注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-text">1.  构造函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-text">2.  析构函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%8F%8B%E5%85%83"><span class="toc-text">3.   友元</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%B2%A1%E6%9C%89%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89"><span class="toc-text">4.  没有重新定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E9%87%8D%E6%96%B0%E5%AE%9A%E4%B9%89%E5%B0%86%E9%9A%90%E8%97%8F%E6%96%B9%E6%B3%95"><span class="toc-text">5.  重新定义将隐藏方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-5%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6-protected"><span class="toc-text">13.5访问控制: protected</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-6%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB%EF%BC%88%E4%B8%8D%E4%B8%80%E5%AE%9A%E8%A6%81%E8%99%9A%E5%87%BD%E6%95%B0%EF%BC%89-%E7%BA%AF%E8%99%9A%E5%87%BD%E6%95%B0"><span class="toc-text">13.6抽象基类（不一定要虚函数）             纯虚函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-7-%E7%BB%A7%E6%89%BF%E5%92%8C%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">13.7 继承和动态内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-text">复制构造函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B5%8B%E5%80%BC%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="toc-text">赋值运算符重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8B%E5%85%83"><span class="toc-text">友元</span></a></li></ol></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+      </div>
+      
+  
+  <footer class="clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='2857782631'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/atom.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="mailto:wencheng.qiu@seu.edu.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="https://github.com/quzard/"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=310404458"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/3.0.0" target="_blank" class="codename">Volantis</a>
+        作为主题，总访问量为
+          <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+          次
+        
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2021</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+      <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+    </div>
+  </div>
+  <div>
+    
+      
+  
+
+  <div id="rightmenu-wrapper">
+    <ul class="list-v rightmenu" id="rightmenu-content">
+      <li class='option'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-text' onclick='document.execCommand("copy")'><i class='fa fa-copy fa-fw'></i>复制文本</a>
+        <hr id='hr-text'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-href'><i class='fa fa-link fa-fw'></i>复制链接</a>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-open-href'><i class='fa fa-external-link-square-alt fa-fw'></i>在新标签页打开</a>
+        <hr id='hr-href'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-src'><i class='fa fa-image fa-fw'></i>复制图片地址</a>
+        <hr id='hr-src'>
+      </li>
+      
+        <li class='navigation'>
+          <a class='nav icon-only fix-cursor-default' onclick='history.back()'><i class='fa fa-arrow-left fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' onclick='history.forward()'><i class='fa fa-arrow-right fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' onclick='window.location.reload()'><i class='fa fa-redo fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' href='/'><i class='fa fa-home fa-fw'></i></a>
+        </li>
+      
+      <hr>
+      
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=http://diudiu6.com/categories/
+        
+        
+        
+        
+          id="http:diudiu6comcategories"
+        >
+        <i class='fa fa-fan fa-spin fa-fw'></i> 分类
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=http://diudiu6.com/tags/
+        
+        
+        
+        
+          id="http:diudiu6comtags"
+        >
+        <i class='fa fa-code-branch fa-fw'></i> 标签
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=http://diudiu6.com/archives/
+        
+        
+        
+        
+          id="http:diudiu6comarchives"
+        >
+        <i class='fa fa-rss fa-fw'></i> 归档
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=http://diudiu6.com/about/
+        
+        
+        
+        
+          id="http:diudiu6comabout"
+        >
+        <i class='fa fa-question fa-fw'></i> 关于
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' 
+        
+        
+        
+          onclick="document.execCommand('print')"
+        
+        >
+        <i class='fa fa-print fa-fw'></i> 打印页面
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          <li class='music name'>
+            <p class='nav music-title fix-cursor-default'></p>
+          </li>
+          <li class='music ctrl'>
+            <a class='nav icon-only backward fix-cursor-default' onclick='aplayerBackward()'><i class='fa fa-step-backward fa-fw'></i></a>
+            <a class='nav icon-only toggle fix-cursor-default' onclick='aplayerToggle()'><i class='fa fa-play fa-fw'></i></a>
+            <a class='nav icon-only forward fix-cursor-default' onclick='aplayerForward()'><i class='fa fa-step-forward fa-fw'></i></a>
+          </li>
+          <li class='music volume'>
+            <a class='nav volume'>
+              <div class="aplayer-volume-bar-wrap">
+                <div class="aplayer-volume-bar fix-cursor-pointer">
+                  <div class="aplayer-volume"></div>
+                  <i class='left fa fa-volume-off fa-fw'></i>
+                  <i class='right fa fa-volume-up fa-fw'></i>
+                </div>
+              </div>
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+  <script>
+    window.document.oncontextmenu = function (event) {
+      if (event.ctrlKey) return true;
+      if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true;
+      return popMenu(event);
+    };
+    document.addEventListener("click", function (event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      mymenu.style.display = "none";
+    });
+    function popMenu(event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      var menuContent = document.getElementById('rightmenu-content');
+      var screenWidth = document.documentElement.clientWidth || document.body.clientWidth;
+      var screenHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      mymenu.style.left = event.clientX + "px"; // 获取鼠标位置
+      mymenu.style.top = event.clientY + "px";
+      mymenu.style.display = 'block';
+      if (event.clientX * 2 > screenWidth) {
+        menuContent.classList.add('left');
+      } else {
+        menuContent.classList.remove('left');
+      }
+      if (event.clientY * 2 > screenHeight) {
+        menuContent.classList.add('top');
+      } else {
+        menuContent.classList.remove('top');
+      }
+
+      let hrText = document.getElementById('hr-text');
+      let hrSrc = document.getElementById('hr-src');
+      let hrHref = document.getElementById('hr-href');
+
+      // 选中图片
+      let copySrc = document.getElementById('menu-copy-src');
+      if (copySrc != undefined) {
+        if (event.target.currentSrc) {
+          copySrc.style.display = 'block';
+          copySrc.addEventListener("click", function (e) {
+            copyString(event.target.currentSrc);
+          },{once: true});
+          hrSrc.style.display = 'block';
+        } else {
+          copySrc.style.display = 'none';
+          hrSrc.style.display = 'none';
+        }
+      }
+
+      // 选中按钮
+      // 判断是不是按钮
+      let href = '';
+      if (event.path) {
+        for (i = 0; i < event.path.length; i++) {
+          if (event.path[i].href != undefined && event.path[i].href.length > 0) {
+            href = event.path[i].href;
+          }
+        }
+      }
+
+      let copyText = document.getElementById('menu-copy-text');
+      copyText.style.display = 'none';
+      hrText.style.display = 'none';
+      if (href.length == 0) {
+        // 选中文本
+        if (window.getSelection().toString()) {
+          copyText.style.display = 'block';
+          hrText.style.display = 'block';
+        }
+      }
+
+      // 在新标签页打开
+      let openHref = document.getElementById('menu-open-href');
+      if (openHref != undefined) {
+        if (href.length > 0) {
+          openHref.style.display = 'block';
+          openHref.addEventListener("click", function (e) {
+            window.open(href);
+          },{once: true});
+          hrHref.style.display = 'block';
+        } else {
+          openHref.style.display = 'none';
+          hrHref.style.display = 'none';
+        }
+      }
+      // 复制链接
+      let copyHref = document.getElementById('menu-copy-href');
+      if (copyHref != undefined) {
+        if (href.length > 0) {
+          copyHref.style.display = 'block';
+          copyHref.addEventListener("click", function (e) {
+            copyString(href);
+          },{once: true});
+        } else {
+          copyHref.style.display = 'none';
+        }
+      }
+
+      // 有音乐播放器
+      if (true == true && ('home,categories,tags,archives,about,hr,print,hr,music'||[]).includes('music')) {
+        // 如果有aplayer，初始化一下
+      	try {
+      		checkAPlayer();
+          updateTitle();
+      	} catch (error) {
+      		console.log(error);
+      	}
+      }
+
+      return false; // 该行代码确保系统自带的右键菜单不会被调出
+    }
+    function hideMenu() {
+      document.getElementById('rightmenu-wrapper').style.display = 'none';
+    }
+    function copyString(str) {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      document.body.appendChild(input);
+      input.setAttribute('value', str);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    }
+    document.execCommand('click');
+  </script>
+
+
+    
+    <!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+
+
+<!-- optional -->
+
+  
+  
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        var imgs=["https://ftp.bmp.ovh/imgs/2020/08/ac1d8c082fab038a.jpg"];
+        if ('true' == 'true') {
+          function shuffle(arr){
+            /*From countercurrent-time*/
+            var n = arr.length;
+            while(n--) {
+              var index = Math.floor(Math.random() * n);
+              var temp = arr[index];
+              arr[index] = arr[n];
+              arr[n] = temp;
+            }
+          }
+          shuffle(imgs);
+        }
+        if ('.cover-backstretch') {
+          $('.cover-backstretch').backstretch(
+            imgs,
+          {
+            duration: "10000",
+            fade: "1500"
+          });
+        } else {
+          $.backstretch(
+            imgs,
+          {
+            duration: "10000",
+            fade: "1500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+  <script>
+  
+  var SEARCH_SERVICE = "hexo" || "hexo";
+  var ROOT = "/" || "/";
+  if (!ROOT.endsWith('/')) ROOT += '/';
+</script>
+
+
+
+
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@2/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  function pjax_fancybox() {
+    $(".md").find("img").not('.inline').not('a img').each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".article-entry").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  $(function () {
+    pjax_fancybox();
+  });
+</script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+</script>
+
+
+
+   <script src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.6/dist/scrollreveal.min.js"></script>
+<script type="text/javascript">
+  function pjax_scrollrebeal() {
+    ScrollReveal().reveal('.l_main .reveal', {
+      distance: '32px',
+      duration: '800',
+      interval: '20',
+      scale: '1',
+      easing: 'ease-out'
+    });
+  }
+  $(function () {
+    pjax_scrollrebeal();
+  });
+</script>
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '2857782631';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+</script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js"></script>
+
+
+
+
+  
+<script src="/js/aplayer.js"></script>
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link'.split(',').filter(function (item) {
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var REQUIRED_FIELDS = ['nick', 'mail', 'link'];
+  var requiredFields = 'nick,mail'.split(',').filter(function (item) {
+    return REQUIRED_FIELDS.indexOf(item) > -1
+  });
+
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+
+  function pjax_valine() {
+    let pageUrl = $.trim($('#pjax-comment-path').text()) === "none" ? 
+      decodeURI(window.location.pathname) : $.trim($('#pjax-comment-path').text());
+    let pagePlaceholder = $.trim($('#pjax-comment-placeholder').text()) === "none" ?
+      "快来评论吧~" : $.trim($('#pjax-comment-placeholder').text());
+
+    let ALLPATH = '';
+    if(ALLPATH != '') pageUrl = ALLPATH;
+
+    var valine = new Valine();
+    valine.init({
+      el: '#valine_container',
+      meta: meta,
+      placeholder: pagePlaceholder,
+      path: pageUrl,
+      appId: "",
+      appKey: "",
+      pageSize: '10',
+      avatar: 'robohash',
+      lang: 'zh-cn',
+      visitor: 'true',
+      highlight: 'true',
+      mathJax: 'false',
+      enableQQ: 'true',
+      requiredFields: requiredFields,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps
+    })
+  }
+
+  $(function () {
+    pjax_valine();
+  });
+</script>
+
+
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js" data-pjax></script>
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+
+  
+    
+<script src="/js/search.js"></script>
+
+  
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://diudiu6.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://diudiu6.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://diudiu6.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              if (pv.getAttribute('data-path') == window.location.pathname) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == window.location.pathname) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+<!-- more -->
+
+
+    
+      
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+    <div id="loading-bar-wrapper"><script>NProgress.configure({parent:"#loading-bar-wrapper",trickleSpeed: 100})</script></div>
+    <script>
+      window.ShowLoading = function() {
+        NProgress.start();
+      };
+      window.HideLoading = function() {
+        NProgress.done();
+      }
+    </script>
+  
+</div>
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+      $.fancybox.close();    // 关闭弹窗
+      $('.l_header .switcher .s-search').removeClass('active'); // 关闭移动端激活的搜索框
+      $('.l_header').removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      $('.wrapper').removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      $('.s-top').unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+      window.ShowLoading();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      // 关于百度统计对 SPA 页面的处理：
+      // 方案一：百度统计>管理>单页应用设置中，打开开启按钮即可对SPA进行统计。 https://tongji.baidu.com/web/help/article?id=324
+      // 方案二：取消注释下列代码。 https://tongji.baidu.com/web/help/article?id=235
+      // 
+      // _hmt.push(['_trackPageview', document.location.pathname]);
+      // 
+
+      // 关于谷歌统计对 SPA 页面的处理：
+      // 当应用以动态方式加载内容并更新地址栏中的网址时，也应该更新通过 gtag.js 存储的网页网址。
+      // https://developers.google.cn/analytics/devguides/collection/gtagjs/single-page-applications?hl=zh-cn
+      
+
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+        pjax_fancybox();
+        
+          
+          if ('.cover') {
+            $('.cover').backstretch("resize");
+          } else {
+            $.backstretch("resize");
+          }
+        
+        
+        
+          pjax_scrollrebeal();
+        
+        
+          pjax_initCopyCode();
+        
+        
+          pjax_valine();
+        
+        
+        
+        
+        
+      } catch (e) {
+        console.log(e);
+      }
+      window.HideLoading();
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+      window.HideLoading();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+
+    
+  </div>
+</body>
+</html>

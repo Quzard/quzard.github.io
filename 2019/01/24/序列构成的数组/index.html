@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html>
+<head hexo-theme='https://github.com/volantis-x/hexo-theme-volantis/tree/3.0.0'>
+  <meta charset="utf-8">
+  <!-- SEO相关 -->
+  
+    
+  
+  <!-- 渲染优化 -->
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <!-- 页面元数据 -->
+  
+  <title>序列构成的数组 - 知其然，知其所以然</title>
+  
+    <meta name="keywords" content="流畅的python,learning">
+  
+
+  
+    <meta name="description" content="不管是python的哪种数据结构，字符串、列表、字节序列、数组、XML 元素，抑或是数据库查询结果，它们都共用一套丰富的操作：迭代、切片、排序，还有拼接。
+深入理解 Python 中的不同序列类型，不但能让我们避免重新发明轮子，它们的 API 还能帮助我们把自己定义的 API 设计得跟原生的序列一样，或者是跟未来...">
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="知其然，知其所以然" type="application/atom+xml">
+  
+
+  <!-- import meta -->
+  
+
+  <!-- link -->
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13/css/all.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/l-lin/font-awesome-animation/dist/font-awesome-animation.min.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+
+  
+
+  
+    <link rel="shortcut icon" type='image/x-icon' href="https://ftp.bmp.ovh/imgs/2020/08/c2b4f291ea60e52e.png">
+  
+
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.css">
+  
+
+  
+
+  <!-- import link -->
+  
+
+  
+  
+    
+<link rel="stylesheet" href="/css/style.css">
+
+  
+
+  
+  
+    <!-- ba -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+	  setTimeout(function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?cc3f1eee52d107cb77f1f0f75f1ea30b";
+		hm.defer=true;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+	  }, 5000);
+    })();
+    </script>
+  
+</head>
+
+<body>
+  <header class="l_header auto shadow blur" style='opacity: 0' >
+  <div class='container'>
+  <div class='wrapper'>
+    <div class='nav-sub'>
+      <p class="title"></p>
+      <ul class='switcher nav-list-h m-phone' id="pjax-header-nav-list">
+        <li><a class="s-comment fas fa-comments fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+          <li><a class="s-toc fas fa-list fa-fw" target="_self" href='javascript:void(0)'></a></li>
+        
+      </ul>
+    </div>
+		<div class="nav-main">
+      
+        
+        <a class="title flat-box" target="_self" href='/'>
+          
+            <img no-lazy class='logo' src='https://ftp.bmp.ovh/imgs/2020/08/c2b4f291ea60e52e.png'/>
+          
+          
+          
+        </a>
+      
+
+			<div class='menu navigation'>
+				<ul class='nav-list-h m-pc'>
+          
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+          
+            
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+          
+				</ul>
+			</div>
+
+      <div class="m_search">
+        <form name="searchform" class="form u-search-form">
+          <i class="icon fas fa-search fa-fw"></i>
+          <input type="text" class="input u-search-input" placeholder="Search..." />
+        </form>
+      </div>
+
+			<ul class='switcher nav-list-h m-phone'>
+				
+					<li><a class="s-search fas fa-search fa-fw" target="_self" href='javascript:void(0)'></a></li>
+				
+				<li>
+          <a class="s-menu fas fa-bars fa-fw" target="_self" href='javascript:void(0)'></a>
+          <ul class="menu-phone list-v navigation white-box">
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/
+                  
+                  
+                  
+                    id="home"
+                  >
+                  <i class='fas fa-rss fa-fw'></i>博客
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/categories/
+                  
+                  
+                  
+                    id="categories"
+                  >
+                  <i class='fas fa-folder-open fa-fw'></i>分类
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/tags/
+                  
+                  
+                  
+                    id="tags"
+                  >
+                  <i class='fas fa-tags fa-fw'></i>标签
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/archives/
+                  
+                  
+                  
+                    id="archives"
+                  >
+                  <i class='fas fa-archive fa-fw'></i>归档
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/friends/
+                  
+                  
+                  
+                    id="friends"
+                  >
+                  <i class='fas fa-link fa-fw'></i>友链
+                </a>
+                
+              </li>
+            
+          
+            
+              
+            
+              <li>
+                <a class="menuitem flat-box faa-parent animated-hover" href=/about/
+                  
+                  
+                  
+                    id="about"
+                  >
+                  <i class='fas fa-info-circle fa-fw'></i>关于
+                </a>
+                
+              </li>
+            
+          
+            
+          </ul>
+        </li>
+			</ul>
+		</div>
+	</div>
+  </div>
+</header>
+
+  <div class="l_body">
+    <div class="l_cover">
+
+  
+  
+      <div class='cover-wrapper post dock' style="display: none;">
+        
+          <div class='cover-backstretch'></div>
+        
+        <div class='cover-body'>
+  <div class='top'>
+    
+    
+    
+  </div>
+  <div class='bottom'>
+    <div class='menu navigation'>
+      <div class='list-h'>
+        
+          
+            <a href="/"
+              
+              
+              id="home">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f4f0.svg'><p>博客</p>
+            </a>
+          
+            <a href="/categories/"
+              
+              
+              id="categories">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f5c3.svg'><p>分类</p>
+            </a>
+          
+            <a href="/tags/"
+              
+              
+              id="tags">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f516.svg'><p>标签</p>
+            </a>
+          
+            <a href="/archives/"
+              
+              
+              id="archives">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f396.svg'><p>归档</p>
+            </a>
+          
+            <a href="/about/"
+              
+              
+              id="about">
+              <img src='https://cdn.jsdelivr.net/gh/twitter/twemoji@13.0/assets/svg/1f389.svg'><p>关于</p>
+            </a>
+          
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="scroll-down" style="display: none;"><i class="fa fa-chevron-down scroll-down-effects"></i></div>
+      </div>
+  
+
+</div>
+
+    <div class='safearea'>
+      <div class='body-wrapper' id="pjax-container">
+        
+          <!--此文件用来存放一些不方便取值的变量-->
+<!--思路大概是将值藏到重加载的区域内-->
+
+
+
+<div id="pjax-data" style="display: none">
+  <div id="pjax-ispage">true</div>
+  <div id="pjax-pageTitle">序列构成的数组</div>
+  <div id="pjax-enable-cover">true</div>
+  <div id="pjax-comment-path">none</div>
+  <div id="pjax-comment-placeholder">none</div>
+</div>
+
+
+<script>
+  // 处理封面 此时 jquery 还没加载
+  if ("none" == "none") { // 移除封面
+    document.getElementsByClassName('cover-wrapper')[0].style.display = "none";
+    document.getElementsByClassName('l_header', 'cover-wrapper')[0].classList.add("show");
+  } else {
+    if ("none" == "blog") { // 半屏
+      document.getElementsByClassName('cover-wrapper')[0].setAttribute('id', 'half');
+      document.getElementsByClassName('scroll-down')[0].style.display = "none";
+    } else if ("none" == "docs") { // 全屏
+      document.getElementsByClassName('cover-wrapper')[0].setAttribute('id', 'full');
+      document.getElementsByClassName('scroll-down')[0].style.display = "";
+    }
+    document.getElementsByClassName('cover-wrapper')[0].style.display = "";
+    document.getElementsByClassName('l_header', 'cover-wrapper')[0].classList.remove("show");
+  }
+</script>
+
+
+        
+        
+
+<div class='l_main'>
+  
+
+  
+    <article id="post" class="post white-box reveal md shadow article-type-post" itemscope itemprop="blogPost">
+      
+
+
+  <div class='article-header'>
+    
+      
+      <div class="article-meta" id="top">
+        
+        
+        
+          <h1 class="title">
+            <a href="/2019/01/24/%E5%BA%8F%E5%88%97%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84/">
+              序列构成的数组
+            </a>
+          </h1>
+        
+        <div class='new-meta-box'>
+          
+            
+          
+            
+              
+<div class='new-meta-item author'>
+  <a class='author' href="/" rel="nofollow">
+    <img no-lazy src="">
+    <p>quzard</p>
+  </a>
+</div>
+
+            
+          
+            
+              
+  <div class='new-meta-item category'>
+    <a class='notlink'>
+      <i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>
+      <a class="category-link" href="/categories/Python/">Python</a><span class="sep"></span><a class="category-link" href="/categories/Python/%E6%B5%81%E7%95%85%E7%9A%84python/">流畅的python</a><span class="sep"></span><a class="category-link" href="/categories/Python/%E6%B5%81%E7%95%85%E7%9A%84python/%E7%AC%AC%E4%BA%8C%E7%AB%A0/">第二章</a>
+    </a>
+  </div>
+
+
+            
+          
+            
+              
+  <div class="new-meta-item wordcount">
+    <a class='notlink'>
+      <i class="fas fa-keyboard fa-fw" aria-hidden="true"></i>
+      <p>字数：6.5k字</p>
+    </a>
+  </div>
+  <div class="new-meta-item readtime">
+    <a class='notlink'>
+      <i class="fas fa-hourglass-half fa-fw" aria-hidden="true"></i>
+      <p>时长：26分钟</p>
+    </a>
+  </div>
+
+
+            
+          
+            
+              <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt fa-fw" aria-hidden="true"></i>
+    <p>发布于：2019年1月24日</p>
+  </a>
+</div>
+
+            
+          
+            
+          
+        </div>
+      </div>
+    
+  </div>
+
+
+      <section class="article typo">
+        <div class="article-entry" itemprop="articleBody">
+          
+          
+          <p>不管是python的哪种数据结构，字符串、列表、字节序列、数组、XML 元素，抑或是数据库查询结果，它们都共用一套丰富的操作：迭代、切片、排序，还有拼接。</p>
+<p>深入理解 Python 中的不同序列类型，不但能让我们避免重新发明轮子，它们的 API 还能帮助我们把自己定义的 API 设计得跟原生的序列一样，或者是跟未来可能出现的序列类型保持兼容。</p>
+<a id="more"></a>
+
+<h3 id="容器序列（存放的是它们所包含的任意类型的对象的引用）"><a href="#容器序列（存放的是它们所包含的任意类型的对象的引用）" class="headerlink" title="容器序列（存放的是它们所包含的任意类型的对象的引用）"></a>容器序列（存放的是它们所包含的任意类型的对象的引用）</h3><blockquote>
+<p>list（列表）, tuple（元组）， collections（collections是Python内建的一个集合模块，提供了许多有用的集合类）, collections.deque（双端队列） 可以存放不同类型的数据，容器序列存放的是他们所包含的任意类型的<strong>对象的引用</strong></p>
+</blockquote>
+<h3 id="扁平序列（存放的是值而不是引用，是一段连续的内存空间，更加紧凑，但是它里面只能存放诸如字符、字节和数值这种基础类型）"><a href="#扁平序列（存放的是值而不是引用，是一段连续的内存空间，更加紧凑，但是它里面只能存放诸如字符、字节和数值这种基础类型）" class="headerlink" title="扁平序列（存放的是值而不是引用，是一段连续的内存空间，更加紧凑，但是它里面只能存放诸如字符、字节和数值这种基础类型）"></a>扁平序列（存放的是值而不是引用，是一段连续的内存空间，更加紧凑，但是它里面只能存放诸如字符、字节和数值这种基础类型）</h3><blockquote>
+<p>str（string）, bytes（字节序列）, bytearray（字节数组）, memoryview（内存视窗）, array.array（保存相同类型的数值的动态数组） 只能容纳一种类型，存放的是值而不是引用。是一段连续的内存空间，更加经凑</p>
+</blockquote>
+<h3 id="可变序列"><a href="#可变序列" class="headerlink" title="可变序列"></a>可变序列</h3><blockquote>
+<p>list（列表）, bytearray（字节数组）, array.array（保存相同类型的数值的动态数组）, collections.deque（双边队列）, memoryview（内存视窗）</p>
+</blockquote>
+<h3 id="不可变序列"><a href="#不可变序列" class="headerlink" title="不可变序列"></a>不可变序列</h3><blockquote>
+<p>tuple（元组）, str（字符串）, bytes（字节序列）</p>
+</blockquote>
+<h5 id="要存放1000万个浮点数时，数组（array）的效率比列表（list）高的多，因为数组在背后存在的并不是float对象，而是数字的机器翻译，也就是字节表述。如果需要频繁对序列做先进先出的操作，deque（双端队列）的速度应该会更快。如果在代码里包含操作（比如检查一个元素是否存在在一个集合里）的频率很高，用set（集合）会更合适，但他不是序列，是无序的。"><a href="#要存放1000万个浮点数时，数组（array）的效率比列表（list）高的多，因为数组在背后存在的并不是float对象，而是数字的机器翻译，也就是字节表述。如果需要频繁对序列做先进先出的操作，deque（双端队列）的速度应该会更快。如果在代码里包含操作（比如检查一个元素是否存在在一个集合里）的频率很高，用set（集合）会更合适，但他不是序列，是无序的。" class="headerlink" title="要存放1000万个浮点数时，数组（array）的效率比列表（list）高的多，因为数组在背后存在的并不是float对象，而是数字的机器翻译，也就是字节表述。如果需要频繁对序列做先进先出的操作，deque（双端队列）的速度应该会更快。如果在代码里包含操作（比如检查一个元素是否存在在一个集合里）的频率很高，用set（集合）会更合适，但他不是序列，是无序的。"></a>要存放1000万个浮点数时，数组（array）的效率比列表（list）高的多，因为数组在背后存在的并不是float对象，而是数字的机器翻译，也就是字节表述。如果需要频繁对序列做先进先出的操作，deque（双端队列）的速度应该会更快。如果在代码里包含操作（比如检查一个元素是否存在在一个集合里）的频率很高，用set（集合）会更合适，但他不是序列，是无序的。</h5><h3 id="列表推导（列表推导是一种构建列表的方法，是构建列表（list）的快捷方式）"><a href="#列表推导（列表推导是一种构建列表的方法，是构建列表（list）的快捷方式）" class="headerlink" title="列表推导（列表推导是一种构建列表的方法，是构建列表（list）的快捷方式）"></a>列表推导（列表推导是一种构建列表的方法，是构建列表（list）的快捷方式）</h3><p>示例 　用列表推导把一个字符串变成 Unicode 码位的列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>symbols = <span class="string">&#x27;$¢£¥€¤&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>codes = [ord(symbol) <span class="keyword">for</span> symbol <span class="keyword">in</span> symbols]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>codes</span><br><span class="line">[<span class="number">36</span>, <span class="number">162</span>, <span class="number">163</span>, <span class="number">165</span>, <span class="number">8364</span>, <span class="number">164</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>map/fillter组合来创建表单</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">symbols = <span class="string">&quot;efaevg&quot;</span></span><br><span class="line">beyond_ascii = list(fillter(<span class="keyword">lambda</span> c: c &gt; <span class="number">127</span>, map(ord, symbols)))</span><br></pre></td></tr></table></figure>
+
+
+
+<p>列表推导</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">symbols = <span class="string">&quot;efaevg&quot;</span></span><br><span class="line">beyond_ascii = [ord(s) <span class="keyword">for</span> s <span class="keyword">in</span> symbols <span class="keyword">if</span> ord(s) &gt; <span class="number">127</span>]</span><br></pre></td></tr></table></figure>
+
+<p><font color=#0099ff> python会忽略代码里[],{}和()中的换行，可以省略不太好看的续行符号\  </font></p>
+<p>列表推导不会再有变量泄漏的问题列表推导、生成器表达式，以及同它们很相似的集合（set）推导和字典（dict）推导，在 Python 3 中都有了自己的局部作用域，就像函数似的。表达式内部的变量和赋值只在局部起作用，表达式的上下文里的同名变量还可以被正常引用，局部变量并不会影响到它们。</p>
+<h6 id="列表推导实现笛卡尔积"><a href="#列表推导实现笛卡尔积" class="headerlink" title="列表推导实现笛卡尔积"></a>列表推导实现笛卡尔积</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">colors = [<span class="string">&quot;white&quot;</span>, <span class="string">&quot;black&quot;</span>, <span class="string">&quot;red&quot;</span>]</span><br><span class="line">sizes = [<span class="string">&#x27;S&#x27;</span>, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;L&#x27;</span>]</span><br><span class="line">T_shirts = [(color, size) <span class="keyword">for</span> color <span class="keyword">in</span> colors <span class="keyword">for</span> size <span class="keyword">in</span> sizes]</span><br></pre></td></tr></table></figure>
+
+<h5 id="列表推导的作用只有一个：生成列表"><a href="#列表推导的作用只有一个：生成列表" class="headerlink" title="列表推导的作用只有一个：生成列表"></a>列表推导的作用只有一个：生成列表</h5><h3 id="生成器表达式（生成器表达式可以用来创建其他任何类型的序列，具有生成各种类型的元素并用它们来填充序列的功能）"><a href="#生成器表达式（生成器表达式可以用来创建其他任何类型的序列，具有生成各种类型的元素并用它们来填充序列的功能）" class="headerlink" title="生成器表达式（生成器表达式可以用来创建其他任何类型的序列，具有生成各种类型的元素并用它们来填充序列的功能）"></a>生成器表达式（生成器表达式可以用来创建其他任何类型的序列，具有生成各种类型的元素并用它们来填充序列的功能）</h3><p>虽然也可以用列表推导来初始化元组、数组或其他序列类型，但是生成器表达式是更好的选择。这是因为生成器表达式背后遵守了迭代器协议，<strong>可以逐个地产出元素</strong>，而不是先建立一个完整的列表，然后再把这个列表传递到某个构造函数里。前面那种方式显然能够<strong>节省内存</strong>。</p>
+<p>生成器表达式的语法跟列表推导差不多，只不过把方括号换成圆括号而已。</p>
+<h6 id="用生成器表达式初始化元组和数组"><a href="#用生成器表达式初始化元组和数组" class="headerlink" title="用生成器表达式初始化元组和数组"></a>用生成器表达式初始化元组和数组</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>symbols = <span class="string">&#x27;$¢£¥€¤&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tuple(ord(symbol) <span class="keyword">for</span> symbol <span class="keyword">in</span> symbols) <span class="comment"># 如果生成器表达式是一个函数调用过程中的唯一参数，那么不需要额外再用括号把它围起来。</span></span><br><span class="line">(<span class="number">36</span>, <span class="number">162</span>, <span class="number">163</span>, <span class="number">165</span>, <span class="number">8364</span>, <span class="number">164</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> array</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>array.array(<span class="string">&#x27;I&#x27;</span>, (ord(symbol) <span class="keyword">for</span> symbol <span class="keyword">in</span> symbols)) <span class="comment">#array 的构造方法需要两个参数，因此括号是必需的。array 构造方法的第一个参数指定了数组中数字的存储方式。</span></span><br><span class="line">array(<span class="string">&#x27;I&#x27;</span>, [<span class="number">36</span>, <span class="number">162</span>, <span class="number">163</span>, <span class="number">165</span>, <span class="number">8364</span>, <span class="number">164</span>])</span><br></pre></td></tr></table></figure>
+
+<h6 id="使用生成器表达式计算笛卡儿积"><a href="#使用生成器表达式计算笛卡儿积" class="headerlink" title="使用生成器表达式计算笛卡儿积"></a>使用生成器表达式计算笛卡儿积</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>colors = [<span class="string">&#x27;black&#x27;</span>, <span class="string">&#x27;white&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sizes = [<span class="string">&#x27;S&#x27;</span>, <span class="string">&#x27;M&#x27;</span>, <span class="string">&#x27;L&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> tshirt <span class="keyword">in</span> (<span class="string">&#x27;%s %s&#x27;</span> % (c, s) <span class="keyword">for</span> c <span class="keyword">in</span> colors <span class="keyword">for</span> s <span class="keyword">in</span> sizes): <span class="comment"># 生成器表达式逐个产出元素，从来不会一次性产出一个含有 6 个 T 恤样式的列表。</span></span><br><span class="line"><span class="meta">... </span>    print(tshirt)</span><br><span class="line">...</span><br><span class="line">black S</span><br><span class="line">black M</span><br><span class="line">black L</span><br><span class="line">white S</span><br><span class="line">white M</span><br><span class="line">white L</span><br></pre></td></tr></table></figure>
+
+<h5 id="生成器表达式逐个产生元素，从来不会一次性产出一个完整的列表"><a href="#生成器表达式逐个产生元素，从来不会一次性产出一个完整的列表" class="headerlink" title="生成器表达式逐个产生元素，从来不会一次性产出一个完整的列表"></a>生成器表达式逐个产生元素，从来不会一次性产出一个完整的列表</h5><h3 id="元组-tuple"><a href="#元组-tuple" class="headerlink" title="元组(tuple)"></a>元组(tuple)</h3><p>元祖可以用于没有字段名的记录</p>
+<h5 id="元组不仅仅是不可变的列表，它还可以用于没有字段名的记录。元组其实是对数据的记录：元组中的每个元素都存放了记录中一个字段的数据，外加这个字段的位置。正是这个位置信息给数据赋予了意义。如果把元组当作一些字段的集合，那么数量和位置信息就变得非常重要了如果在任何的表达式里我们在元组内对元素排序，这些元素所携带的信息就会丢失，因为这些信息是跟它们的位置有关的"><a href="#元组不仅仅是不可变的列表，它还可以用于没有字段名的记录。元组其实是对数据的记录：元组中的每个元素都存放了记录中一个字段的数据，外加这个字段的位置。正是这个位置信息给数据赋予了意义。如果把元组当作一些字段的集合，那么数量和位置信息就变得非常重要了如果在任何的表达式里我们在元组内对元素排序，这些元素所携带的信息就会丢失，因为这些信息是跟它们的位置有关的" class="headerlink" title="元组不仅仅是不可变的列表，它还可以用于没有字段名的记录。元组其实是对数据的记录：元组中的每个元素都存放了记录中一个字段的数据，外加这个字段的位置。正是这个位置信息给数据赋予了意义。如果把元组当作一些字段的集合，那么数量和位置信息就变得非常重要了如果在任何的表达式里我们在元组内对元素排序，这些元素所携带的信息就会丢失，因为这些信息是跟它们的位置有关的"></a>元组不仅仅是不可变的列表，它还可以用于没有字段名的记录。元组其实是对数据的记录：元组中的每个元素都存放了记录中一个字段的数据，外加这个字段的位置。正是这个位置信息给数据赋予了意义。如果把元组当作一些字段的集合，那么数量和位置信息就变得非常重要了如果在任何的表达式里我们在元组内对元素排序，这些元素所携带的信息就会丢失，因为这些信息是跟它们的位置有关的</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>lax_coordinates = (<span class="number">33.9425</span>, <span class="number">-118.408056</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>city, year, pop, chg, area = (<span class="string">&#x27;Tokyo&#x27;</span>, <span class="number">2003</span>, <span class="number">32450</span>, <span class="number">0.66</span>, <span class="number">8014</span>) </span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>traveler_ids = [(<span class="string">&#x27;USA&#x27;</span>, <span class="string">&#x27;31195855&#x27;</span>), (<span class="string">&#x27;BRA&#x27;</span>, <span class="string">&#x27;CE342567&#x27;</span>), </span><br><span class="line"><span class="meta">... </span>(<span class="string">&#x27;ESP&#x27;</span>, <span class="string">&#x27;XDA205856&#x27;</span>)]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> passport <span class="keyword">in</span> sorted(traveler_ids): <span class="comment">#在迭代的过程中，passport 变量被绑定到每个元组上。</span></span><br><span class="line"><span class="meta">... </span>print(<span class="string">&#x27;%s/%s&#x27;</span> % passport) </span><br><span class="line">...</span><br><span class="line">BRA/CE342567</span><br><span class="line">ESP/XDA205856</span><br><span class="line">USA/<span class="number">31195855</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> country, _ <span class="keyword">in</span> traveler_ids: </span><br><span class="line"><span class="meta">... </span>print(country)</span><br><span class="line">...</span><br><span class="line">USA</span><br><span class="line">BRA</span><br><span class="line">ESP</span><br></pre></td></tr></table></figure>
+
+<p>for 循环可以分别提取元组里的元素，也叫作拆包（unpacking）。因为元组中第二个元素对我们没有什么用，所以它赋值给“_”占位符。<br>拆包让元组可以完美地被当作记录来使用<br>总结：记录与元祖——位置的重要性</p>
+<h4 id="元组拆包"><a href="#元组拆包" class="headerlink" title="元组拆包"></a>元组拆包</h4><p>元组拆包可以应用到任何可迭代对象上，唯一的硬性要求是，被可迭代对象中的元素数量必须要跟接收这些元素的元组的空档数一致。除非我们用*来表示忽略多余的元素</p>
+<p>*运算符把一个可迭代对象拆开作为函数的参数可以帮助我们把注意力集中在元组的部分数据中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>divmod(<span class="number">20</span>, <span class="number">8</span>)</span><br><span class="line">(<span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t = (<span class="number">20</span>, <span class="number">8</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>divmod(*t)</span><br><span class="line">(<span class="number">2</span>, <span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>quotient, remainder = divmod(*t)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>quotient, remainder</span><br><span class="line">(<span class="number">2</span>, <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>用*来处理剩下的元素 ,在 Python 中，函数用 *args 来获取不确定数量的参数算是一种经典写法了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b, *rest = range(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b, rest</span><br><span class="line">(<span class="number">0</span>, <span class="number">1</span>, [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b, *rest = range(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b, rest   </span><br><span class="line">(<span class="number">0</span>, <span class="number">1</span>, [<span class="number">2</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b, *rest = range(<span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, b, rest</span><br><span class="line">(<span class="number">0</span>, <span class="number">1</span>, [])</span><br></pre></td></tr></table></figure>
+
+<p>在平行赋值中，*前缀只能用在一个变量名前面，但是这个变量可以出现在赋值表达式中任意位置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, *body, c, d = range(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a, body, c, d</span><br><span class="line">(<span class="number">0</span>, [<span class="number">1</span>, <span class="number">2</span>], <span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>*head, b, c, d = range(<span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>head, b, c, d</span><br><span class="line">([<span class="number">0</span>, <span class="number">1</span>], <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>平行赋值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b, a = a, b</span><br></pre></td></tr></table></figure>
+
+<p>下面是另一个例子，这里元组拆包的用法则是让一个函数可以用元组的形式返回多个值，然后调用函数的代码就能轻松地接受这些返回值。比如 os.path.split() 函数就会返回以路径和最后一个文件名组成的元组 (path, last_part):</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> os</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>_, filename = os.path.split(<span class="string">&#x27;/home/luciano/.ssh/idrsa.pub&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>filename</span><br><span class="line"><span class="string">&#x27;idrsa.pub&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="嵌套元组拆包"><a href="#嵌套元组拆包" class="headerlink" title="嵌套元组拆包"></a>嵌套元组拆包</h4><p>接受表达式的元组可以是嵌套式的，例如 (a, b, (c, d))。只要这个接受元组的嵌套结构符合表达式本身的嵌套结构，Python 就可以作出正确的对应。</p>
+<h4 id="具名元组"><a href="#具名元组" class="headerlink" title="具名元组"></a>具名元组</h4><p>collections.namedtuple 是一个工厂函数，它可以用来构建一个带字段名的元组和一个有名字的类——这个带名字的类对调试程序有很大帮助。</p>
+<p>实例用具名元组来记录一个城市的信息。定义和使用具名元组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>City = namedtuple(<span class="string">&#x27;City&#x27;</span>, <span class="string">&#x27;name country population coordinates&#x27;</span>)  <span class="comment">#创建一个具名元组需要两个参数，一个是类名，另一个是类的各个字段的名字。后者可以是由数个字符串组成的可迭代对象，或者是由空格分隔开的字段名组成的字符串。</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tokyo = City(<span class="string">&#x27;Tokyo&#x27;</span>, <span class="string">&#x27;JP&#x27;</span>, <span class="number">36.933</span>, (<span class="number">35.689722</span>, <span class="number">139.691667</span>))  <span class="comment">#存放在对应字段里的数据要以一串参数的形式传入到构造函数中（注意，元组的构造函数却只接受单一的可迭代对象）。</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tokyo</span><br><span class="line">City(name=<span class="string">&#x27;Tokyo&#x27;</span>, country=<span class="string">&#x27;JP&#x27;</span>, population=<span class="number">36.933</span>, coordinates=(<span class="number">35.689722</span>,</span><br><span class="line"><span class="number">139.691667</span>))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tokyo.population  <span class="comment">#你可以通过字段名或者位置来获取一个字段的信息。</span></span><br><span class="line"><span class="number">36.933</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tokyo.coordinates</span><br><span class="line">(<span class="number">35.689722</span>, <span class="number">139.691667</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>tokyo[<span class="number">1</span>]</span><br><span class="line"><span class="string">&#x27;JP&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>City._fields  <span class="comment"># _fields 属性是一个包含这个类所有字段名称的元组。</span></span><br><span class="line">(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;country&#x27;</span>, <span class="string">&#x27;population&#x27;</span>, <span class="string">&#x27;coordinates&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>LatLong = namedtuple(<span class="string">&#x27;LatLong&#x27;</span>, <span class="string">&#x27;lat long&#x27;</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>delhi_data = (<span class="string">&#x27;Delhi NCR&#x27;</span>, <span class="string">&#x27;IN&#x27;</span>, <span class="number">21.935</span>, LatLong(<span class="number">28.613889</span>, <span class="number">77.208889</span>))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>delhi = City._make(delhi_data)  <span class="comment"># 用 _make() 通过接受一个可迭代对象来生成这个类的一个实例，它的作用跟City(*delhi_data) 是一样的。</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>delhi._asdict()  <span class="comment">#_asdict() 把具名元组以 collections.OrderedDict 的形式返回，我们可以利用它来把元组里的信息友好地呈现出来。</span></span><br><span class="line">OrderedDict([(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;Delhi NCR&#x27;</span>), (<span class="string">&#x27;country&#x27;</span>, <span class="string">&#x27;IN&#x27;</span>), (<span class="string">&#x27;population&#x27;</span>,</span><br><span class="line"><span class="number">21.935</span>), (<span class="string">&#x27;coordinates&#x27;</span>, LatLong(lat=<span class="number">28.613889</span>, long=<span class="number">77.208889</span>))])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> key, value <span class="keyword">in</span> delhi._asdict().items():</span><br><span class="line">        print(key + <span class="string">&#x27;:&#x27;</span>, value)</span><br><span class="line">name: Delhi NCR</span><br><span class="line">country: IN</span><br><span class="line">population: <span class="number">21.935</span></span><br><span class="line">coordinates: LatLong(lat=<span class="number">28.613889</span>, long=<span class="number">77.208889</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="列表或元组的方法和属性（那些由object类支持的方法没有列出来）"><a href="#列表或元组的方法和属性（那些由object类支持的方法没有列出来）" class="headerlink" title="列表或元组的方法和属性（那些由object类支持的方法没有列出来）"></a>列表或元组的方法和属性（那些由object类支持的方法没有列出来）</h3><table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">列表</th>
+<th align="center">元组</th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">s.<strong>add</strong>(s2)</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">s + s2，拼接</td>
+</tr>
+<tr>
+<td align="center">s.<strong>iadd</strong>(s2)</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">s += s2，就地拼接</td>
+</tr>
+<tr>
+<td align="center">s.append(e)</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">在尾部添加一个新元素</td>
+</tr>
+<tr>
+<td align="center">s.clear()</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">删除所有元素</td>
+</tr>
+<tr>
+<td align="center">s.<strong>contains</strong>(e)</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">s 是否包含 e</td>
+</tr>
+<tr>
+<td align="center">s.copy()</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">列表的浅复制</td>
+</tr>
+<tr>
+<td align="center">s.count(e)</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">e 在 s 中出现的次数</td>
+</tr>
+<tr>
+<td align="center">s.<strong>delitem</strong>(p)</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">把位于 p 的元素删除</td>
+</tr>
+<tr>
+<td align="center">s.extend(it)</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">把可迭代对象 it 追加给 s</td>
+</tr>
+<tr>
+<td align="center">s.<strong>getitem</strong>(p)</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">s[p]，获取位置 p 的元素</td>
+</tr>
+<tr>
+<td align="center">s.<strong>getnewargs</strong>()</td>
+<td align="center"></td>
+<td align="center">•</td>
+<td align="center">在 pickle 中支持更加优化的序列化</td>
+</tr>
+<tr>
+<td align="center">s.index(e)</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">在 s 中找到元素 e 第一次出现的位置</td>
+</tr>
+<tr>
+<td align="center">s.insert(p, e)</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">在位置 p 之前插入元素e</td>
+</tr>
+<tr>
+<td align="center">s.<strong>iter</strong>()</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">获取 s 的迭代器</td>
+</tr>
+<tr>
+<td align="center">s.<strong>len</strong>()</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">len(s)，元素的数量</td>
+</tr>
+<tr>
+<td align="center">s.<strong>mul</strong>(n)</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">s * n，n 个 s 的重复拼接</td>
+</tr>
+<tr>
+<td align="center">s.<strong>imul</strong>(n)</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">s *= n，就地重复拼接</td>
+</tr>
+<tr>
+<td align="center">s.<strong>rmul</strong>(n)</td>
+<td align="center">•</td>
+<td align="center">•</td>
+<td align="center">n * s，反向拼接 *</td>
+</tr>
+<tr>
+<td align="center">s.pop([p])</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">删除最后或者是（可选的）位于 p 的元素，并返回它的值</td>
+</tr>
+<tr>
+<td align="center">s.remove(e)</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">删除 s 中的第一次出现的 e</td>
+</tr>
+<tr>
+<td align="center">s.reverse()</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">就地把 s 的元素倒序排列</td>
+</tr>
+<tr>
+<td align="center">s.<strong>reversed</strong>()</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">返回 s 的倒序迭代器</td>
+</tr>
+<tr>
+<td align="center">s.<strong>setitem</strong>(p, e)</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">s[p] = e，把元素 e 放在位置p，替代已经在那个位置的元素</td>
+</tr>
+<tr>
+<td align="center">s.sort([key],[reverse])</td>
+<td align="center">•</td>
+<td align="center"></td>
+<td align="center">就地对 s 中的元素进行排序，可选的参数有键（key）和是否倒序（reverse）</td>
+</tr>
+</tbody></table>
+<h3 id="高级切片形式的用法"><a href="#高级切片形式的用法" class="headerlink" title="高级切片形式的用法"></a>高级切片形式的用法</h3><p>序列可以用 s[a:b] 的形式切片<br>在 Python 里，像列表（list）、元组（tuple）和字符串（str）这类序列类型都支持切片操作</p>
+<h4 id="切片和区间会忽略最后一个元素"><a href="#切片和区间会忽略最后一个元素" class="headerlink" title="切片和区间会忽略最后一个元素"></a>切片和区间会忽略最后一个元素</h4><h4 id="对对象进行切片"><a href="#对对象进行切片" class="headerlink" title="对对象进行切片"></a>对对象进行切片</h4><p>用 s[a:b:c] 的形式对 s 在 a 和 b 之间以 c 为间隔取值。c 的值还可以为负，负值意味着反向取值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>s = <span class="string">&#x27;bicycle&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s[::<span class="number">3</span>]</span><br><span class="line"><span class="string">&#x27;bye&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s[::<span class="number">-1</span>]</span><br><span class="line"><span class="string">&#x27;elcycib&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>s[::<span class="number">-2</span>]</span><br><span class="line"><span class="string">&#x27;eccb&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>a:b:c 这种用法只能作为索引或者下标用在 [] 中来返回一个切片对象：slice(a, b,c)</p>
+<h3 id="多维切片和省略"><a href="#多维切片和省略" class="headerlink" title="多维切片和省略"></a>多维切片和省略</h3><h4 id="Python-内置的序列类型都是一维的，因此它们只支持单一的索引，成对出现的索引是没有用的。"><a href="#Python-内置的序列类型都是一维的，因此它们只支持单一的索引，成对出现的索引是没有用的。" class="headerlink" title="Python 内置的序列类型都是一维的，因此它们只支持单一的索引，成对出现的索引是没有用的。"></a>Python 内置的序列类型都是一维的，因此它们只支持单一的索引，成对出现的索引是没有用的。</h4><p>[] 运算符里还可以使用以逗号分开的多个索引或者是切片，</p>
+<h4 id="外部库-NumPy-里就用到了这个特性，二维的-numpy-ndarray-就可以用-a-i-j-这种形式来获取，抑或是用-a-m-n-k-l-的方式来得到二维切片。"><a href="#外部库-NumPy-里就用到了这个特性，二维的-numpy-ndarray-就可以用-a-i-j-这种形式来获取，抑或是用-a-m-n-k-l-的方式来得到二维切片。" class="headerlink" title="外部库 NumPy 里就用到了这个特性，二维的 numpy.ndarray 就可以用 a[i, j] 这种形式来获取，抑或是用 a[m:n,k:l] 的方式来得到二维切片。"></a>外部库 NumPy 里就用到了这个特性，二维的 numpy.ndarray 就可以用 a[i, j] 这种形式来获取，抑或是用 a[m:n,k:l] 的方式来得到二维切片。</h4><p>算符的话，对象的特殊方法 <strong>getitem</strong> 和 <strong>setitem</strong> 需要以元组的形式来接收a[i, j] 中的索引。也就是说，如果要得到 a[i, j] 的值，Python 会调用a.<strong>getitem</strong>((i, j))。</p>
+<h4 id="省略（ellipsis）的正确书写方法是三个英语句号（…），而不是-Unicdoe-码位-U-2026表示的半个省略号（…）"><a href="#省略（ellipsis）的正确书写方法是三个英语句号（…），而不是-Unicdoe-码位-U-2026表示的半个省略号（…）" class="headerlink" title="省略（ellipsis）的正确书写方法是三个英语句号（…），而不是 Unicdoe 码位 U+2026表示的半个省略号（…）"></a>省略（ellipsis）的正确书写方法是三个英语句号（…），而不是 Unicdoe 码位 U+2026表示的半个省略号（…）</h4><p>在NumPy中 … 用作多维数组切片的快捷方式 。如果 x 是四维数组，那么 x[i, …] 就是 x[i,:, :, :] 的缩写</p>
+<h3 id="给切片赋值"><a href="#给切片赋值" class="headerlink" title="给切片赋值"></a>给切片赋值</h3><p>如果把切片放在赋值语句的左边，或把它作为 del 操作的对象，我们就可以对序列进行嫁接、切除或就地修改操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>l = list(range(<span class="number">10</span>))</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">2</span>:<span class="number">5</span>] = [<span class="number">20</span>, <span class="number">30</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> l[<span class="number">5</span>:<span class="number">7</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">9</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">3</span>::<span class="number">2</span>] = [<span class="number">11</span>, <span class="number">22</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">20</span>, <span class="number">11</span>, <span class="number">5</span>, <span class="number">22</span>, <span class="number">9</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">2</span>:<span class="number">5</span>] = <span class="number">100</span>  <span class="comment"># 如果赋值的对象是一个切片，那么赋值语句的右侧必须是个可迭代对象。即便只有单独一个值，也要把它转换成可迭代的序列。  正确的做法是l[2:5] = [100]</span></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">TypeError: can only assign an iterable</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l[<span class="number">2</span>:<span class="number">5</span>] = [<span class="number">100</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l</span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">100</span>, <span class="number">22</span>, <span class="number">9</span>]</span><br></pre></td></tr></table></figure>
+
+<h3 id="对序列使用-和"><a href="#对序列使用-和" class="headerlink" title="对序列使用+和*"></a>对序列使用+和*</h3><p>如果想要把一个序列复制几份然后再拼接起来，更快捷的做法是把这个序列乘以一个整数。同样，这个操作会产生一个新序列.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>l = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>l * <span class="number">5</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="number">5</span> * <span class="string">&#x27;abcd&#x27;</span></span><br><span class="line"><span class="string">&#x27;abcdabcdabcdabcdabcd&#x27;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>和 * 都遵循这个规律，不修改原有的操作对象，而是构建一个全新的序列。</li>
+</ul>
+<h4 id="append是引用不是传值-第八章会说明引用和可变对象的原理"><a href="#append是引用不是传值-第八章会说明引用和可变对象的原理" class="headerlink" title="append是引用不是传值(第八章会说明引用和可变对象的原理)"></a>append是引用不是传值(第八章会说明引用和可变对象的原理)</h4><p><strong>如果在 a * n 这个语句中，序列 a 里的元素是对其他可变对象的引用的话，你就需要格外注意了，因为这个式子的结果可能会出乎意料。比如，你想用my_list = [[]] * 3 来初始化一个由列表组成的列表，但是你得到的列表里包含的 3 个元素其实是 3 个引用，而且这 3 个引用指向的都是同一个列表。这可能不是你想要的效果。</strong></p>
+<p>下面错误用法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a = [<span class="string">&#x27;_&#x27;</span>,<span class="string">&#x27;_&#x27;</span>,<span class="string">&#x27;_&#x27;</span>]<span class="comment">#或者 a=[&#x27;_&#x27;]*3</span></span><br><span class="line">board =[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    board.append(a)</span><br><span class="line">board[<span class="number">1</span>][<span class="number">2</span>]=<span class="string">&#x27;2&#x27;</span></span><br><span class="line">print(board)</span><br><span class="line"><span class="comment">#board = [[&#x27;_&#x27;, &#x27;_&#x27;, &#x27;2&#x27;], [&#x27;_&#x27;, &#x27;_&#x27;, &#x27;2&#x27;], [&#x27;_&#x27;, &#x27;_&#x27;, &#x27;2&#x27;]]</span></span><br></pre></td></tr></table></figure>
+
+<p>下面正确操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">board = [[<span class="string">&#x27;_&#x27;</span>]*<span class="number">3</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>)]</span><br><span class="line">board[<span class="number">1</span>][<span class="number">2</span>]=<span class="string">&#x27;2&#x27;</span></span><br><span class="line">print(board)</span><br><span class="line"><span class="comment">#[[&#x27;_&#x27;, &#x27;_&#x27;, &#x27;_&#x27;], [&#x27;_&#x27;, &#x27;_&#x27;, &#x27;2&#x27;], [&#x27;_&#x27;, &#x27;_&#x27;, &#x27;_&#x27;]]</span></span><br></pre></td></tr></table></figure>
+
+<p>下面正确操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">board =[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    a = [<span class="string">&#x27;_&#x27;</span>,<span class="string">&#x27;_&#x27;</span>,<span class="string">&#x27;_&#x27;</span>]<span class="comment">#或者 a=[&#x27;_&#x27;]*3   与上面区别，这里每次for都新建了一个列表</span></span><br><span class="line">    board.append(a)</span><br><span class="line">board[<span class="number">1</span>][<span class="number">2</span>]=<span class="string">&#x27;2&#x27;</span></span><br><span class="line">print(board)</span><br><span class="line"><span class="comment">#[[&#x27;_&#x27;, &#x27;_&#x27;, &#x27;_&#x27;], [&#x27;_&#x27;, &#x27;_&#x27;, &#x27;2&#x27;], [&#x27;_&#x27;, &#x27;_&#x27;, &#x27;_&#x27;]]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="序列的增量赋值"><a href="#序列的增量赋值" class="headerlink" title="　序列的增量赋值"></a>　序列的增量赋值</h3><p>增量赋值运算符 += 和 *= 的表现取决于它们的第一个操作对象<br>+= 背后的特殊方法是 <strong>iadd</strong> （用于“就地加法”）。但是如果一个类没有实现这个方法的话，Python 会退一步调用 <strong>add</strong> 。</p>
+<p>如果 a 实现了 <strong>iadd</strong> 方法，就会调用这个方法。同时对可变序列（例如list、bytearray 和 array.array）来说，a 会就地改动，就像调用了 a.extend(b)一样。但是如果 a 没有实现 <strong>iadd</strong> 的话，a += b 这个表达式的效果就变得跟 a = a+ b 一样了：首先计算 a + b，得到一个新的对象，然后赋值给 a。也就是说，在这个表达式中，变量名会不会被关联到新的对象，完全取决于这个类型有没有实现 <strong>iadd</strong> 这个方法。<br>总体来讲，可变序列一般都实现了 <strong>iadd</strong> 方法，因此 += 是就地加法。而不可变序列根本就不支持这个操作，对这个方法的实现也就无从谈起。<br>上面所说的这些关于 += 的概念也适用于 *=，不同的是，后者相对应的是 <strong>imul__。关于 __iadd</strong> 和 <strong>imul</strong></p>
+<h4 id="对不可变序列进行重复拼接操作的话，效率会很低，因为每次都有一个新对象，而解释器需要把原来对象中的元素先复制到新的对象里，然后再追加新的元素。"><a href="#对不可变序列进行重复拼接操作的话，效率会很低，因为每次都有一个新对象，而解释器需要把原来对象中的元素先复制到新的对象里，然后再追加新的元素。" class="headerlink" title="对不可变序列进行重复拼接操作的话，效率会很低，因为每次都有一个新对象，而解释器需要把原来对象中的元素先复制到新的对象里，然后再追加新的元素。"></a>对不可变序列进行重复拼接操作的话，效率会很低，因为每次都有一个新对象，而解释器需要把原来对象中的元素先复制到新的对象里，然后再追加新的元素。</h4><h4 id="str-是一个例外，因为对字符串做-实在是太普遍了。为-str-初始化内存的时候，程序会为它留出额外的可扩展空间，因此进行增量操作的时候，并不会涉及复制原有字符串到新位置这类操作。"><a href="#str-是一个例外，因为对字符串做-实在是太普遍了。为-str-初始化内存的时候，程序会为它留出额外的可扩展空间，因此进行增量操作的时候，并不会涉及复制原有字符串到新位置这类操作。" class="headerlink" title="str 是一个例外，因为对字符串做 += 实在是太普遍了。为 str 初始化内存的时候，程序会为它留出额外的可扩展空间，因此进行增量操作的时候，并不会涉及复制原有字符串到新位置这类操作。"></a>str 是一个例外，因为对字符串做 += 实在是太普遍了。为 str 初始化内存的时候，程序会为它留出额外的可扩展空间，因此进行增量操作的时候，并不会涉及复制原有字符串到新位置这类操作。</h4><h4 id="元组中的神奇问题"><a href="#元组中的神奇问题" class="headerlink" title="元组中的神奇问题"></a>元组中的神奇问题</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">t=(<span class="number">1</span>,<span class="number">2</span>,[<span class="number">1</span>,<span class="number">2</span>])</span><br><span class="line">t*=<span class="number">3</span><span class="comment">#也是引用拼接</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t[<span class="number">2</span>]+=[<span class="number">1</span>]<span class="comment">#虽然报错，但依然+=成功,可以用t[2].extend([1])来避免这个异常问题</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>Traceback (most recent call last):</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>  File <span class="string">&quot;&lt;stdin&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>TypeError: <span class="string">&#x27;tuple&#x27;</span> object does <span class="keyword">not</span> support item assignment</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>t</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="number">1</span>, <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>], <span class="number">1</span>, <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>], <span class="number">1</span>, <span class="number">2</span>, [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<p>教训：<br>1.不要把可变对象放在元组里面<br>2.增量赋值不是一个原子操作，虽然抛出异常但还是完成了<br>3.查看python的字节码不难但有帮助</p>
+<p>查看字节码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dis</span><br><span class="line">dis.dis(<span class="string">&#x27;t[2]+=[1]&#x27;</span>)</span><br><span class="line"><span class="number">2</span>**<span class="number">3</span> = <span class="number">8</span>   </span><br><span class="line"><span class="number">2</span>**<span class="number">4</span> = <span class="number">16</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="排序——list-sort方法和内置函数sorted"><a href="#排序——list-sort方法和内置函数sorted" class="headerlink" title="排序——list.sort方法和内置函数sorted"></a>排序——list.sort方法和内置函数sorted</h3><p> list.sort(reverse = False, key = len) 会就地排序列表，不会把原列表复制一份。返回 None</p>
+<p> sorted(reverse = False, key = len) 会新建一个列表作为返回值</p>
+<p> reverse 默认为 False, 如果被设为 True, 被排序的序列里的元素会以降序输出</p>
+<p> key 一个只有一个参数的函数，这个函数会被用在序列里的每一个元素上，所产生的结果将是排序算法依赖的对比关键字。  比如在对一些字符串排序时，可以用key=str.lower 来实现忽略大小写的排序（书本36）key=len 进行基于字符串长度的排序。默认为恒值函数也就是默认用元素自己的值来排序。</p>
+<h3 id="用bisect来管理已排序的序列"><a href="#用bisect来管理已排序的序列" class="headerlink" title="用bisect来管理已排序的序列"></a>用bisect来管理已排序的序列</h3><p>bisect 模块包含两个主要函数，bisect 和 insort，两个函数都利用二分查找算法来在有序序列中查找或插入元素。</p>
+<h4 id="用bisect来搜索"><a href="#用bisect来搜索" class="headerlink" title="用bisect来搜索"></a>用bisect来搜索</h4><h4 id="用bisect-insort插入新元素"><a href="#用bisect-insort插入新元素" class="headerlink" title="用bisect.insort插入新元素"></a>用bisect.insort插入新元素</h4><p>例子<br>haystack有序升序序列，needle需要插入的数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bisect.bisect(haystack, needle, lo = <span class="number">0</span>, hi = len(haystack))  <span class="comment">#利用二分法来查找,bisect.bisect返回的位置前面的值，都小于或等于 needle 的值</span></span><br><span class="line">bisect.insort(haystack, needle)  <span class="comment">#利用二分法来插入</span></span><br><span class="line"></span><br><span class="line">bisect.bisect_left(haystack, needle, lo = <span class="number">0</span>, hi = len(haystack))  <span class="comment"># 利用二分法来查找,返回位置值，前面的值都  &lt;needle</span></span><br><span class="line">bisect.bisect_right(haystack, needle, lo = <span class="number">0</span>, hi = len(haystack))  <span class="comment"># 利用二分法来查找,返回位置值，前面的值都 ≤needle</span></span><br></pre></td></tr></table></figure>
+
+<img src="/2019/01/24/%E5%BA%8F%E5%88%97%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84/png_5.png" class="" title="bisect.bisect_right">
+
+
+
+<img src="/2019/01/24/%E5%BA%8F%E5%88%97%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84/png_6.png" class="" title="bisect.bisect_left">
+
+
+
+<h4 id="根据一个分数找到他所对应的绩点"><a href="#根据一个分数找到他所对应的绩点" class="headerlink" title="根据一个分数找到他所对应的绩点"></a>根据一个分数找到他所对应的绩点</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> bisect</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">grade</span>(<span class="params">score, breakpoints=[<span class="number">60</span>, <span class="number">70</span>, <span class="number">80</span>, <span class="number">90</span>], grades=<span class="string">&#x27;FDCBA&#x27;</span></span>):</span></span><br><span class="line">    i = bisect.bisect(breakpoints, score)</span><br><span class="line">    <span class="keyword">return</span> grades[i]</span><br><span class="line">print([grade(score) <span class="keyword">for</span> score <span class="keyword">in</span> [<span class="number">22</span>, <span class="number">44</span>, <span class="number">66</span>, <span class="number">77</span>, <span class="number">34</span>, <span class="number">88</span> , <span class="number">99</span>]])</span><br><span class="line"><span class="comment">#[&#x27;F&#x27;, &#x27;F&#x27;, &#x27;D&#x27;, &#x27;C&#x27;, &#x27;F&#x27;, &#x27;B&#x27;, &#x27;A&#x27;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数组array的使用"><a href="#数组array的使用" class="headerlink" title="数组array的使用"></a>数组array的使用</h3><p>如果只需要处理数字列表的话，数组可能是个更好的选择。<br>如果我们需要一个只包含数字的列表，那么 array.array 比 list 更高效。数组支持所有跟可变序列有关的操作，包括 .pop、.insert 和 .extend。另外，数组还提供从文件读取和存入文件的更快的方法，如 .frombytes 和 .tofile。</p>
+<p>创建数组需要一个类型码，这个类型码用来表示在底层的 C 语言应该存放怎样的数据类型。<br>类型码网上都有<br>比如 b 类型码代表的是有符号的字符（signed char），因此 array(‘b’) 创建出的数组就只能存放一个字节大小的整数，范围从 -128到 127<br>Python 不会允许你在数组里存放除指定类型之外的数据。</p>
+<h4 id="一个浮点型数组的创建、存入文件和从文件读取的过程"><a href="#一个浮点型数组的创建、存入文件和从文件读取的过程" class="headerlink" title="一个浮点型数组的创建、存入文件和从文件读取的过程"></a>一个浮点型数组的创建、存入文件和从文件读取的过程</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> array <span class="keyword">import</span> array<span class="comment">#引入array类型</span></span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">floats = array(<span class="string">&#x27;d&#x27;</span>, (random() <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>**<span class="number">7</span>)))<span class="comment">#利用一个可迭代对象来建立一个双精度浮点数组（类型码是&#x27;d&#x27;)，1000万个</span></span><br><span class="line">fp = open(<span class="string">&#x27;floats.bin&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>)</span><br><span class="line">floats.tofile(fp)<span class="comment">#把数组存入一个二进制文件里</span></span><br><span class="line">fp.close()</span><br><span class="line">floats2 = array(<span class="string">&#x27;d&#x27;</span>)<span class="comment">#新建一个双精度浮点空数组</span></span><br><span class="line">fp = open(<span class="string">&#x27;floats.bin&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">floats2.frombytes(fp, <span class="number">10</span>**<span class="number">7</span>)<span class="comment">#把1000万个浮点数从二进制文件里读取出来</span></span><br><span class="line">fp.close()</span><br><span class="line">floats2 == floats</span><br></pre></td></tr></table></figure>
+
+<h4 id="从-Python-3-4-开始，数组类型不再支持诸如-list-sort-这种就地排序方法。要给数组排序的话，得用-sorted-函数新建一个数组："><a href="#从-Python-3-4-开始，数组类型不再支持诸如-list-sort-这种就地排序方法。要给数组排序的话，得用-sorted-函数新建一个数组：" class="headerlink" title="从 Python 3.4 开始，数组类型不再支持诸如 list.sort() 这种就地排序方法。要给数组排序的话，得用 sorted 函数新建一个数组："></a>从 Python 3.4 开始，数组类型不再支持诸如 list.sort() 这种就地排序方法。要给数组排序的话，得用 sorted 函数新建一个数组：</h4><p>想要在不打乱次序的情况下为数组添加新的元素，bisect.insort 还是能派上用场</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a = array.array(a.typecode, sorted(a))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="内存视图-memoryview"><a href="#内存视图-memoryview" class="headerlink" title="内存视图  memoryview"></a>内存视图  memoryview</h3><p>内存视窗能让你在不需要复制内容的前提下在数据结构之间共享内存<br>memoryview.cast能用不同的方式读写同一块内存数据，而且内容字节不会随意移动<br>memoryview.cast 会把同一块内存里的内容打包成一个全新的 memoryview 对象给你。</p>
+<p>在示例里我们利用 memoryview 精准地修改了一个数组的某个字节，这个数组的元素是 16 位二进制整数。<br>　通过改变数组中的一个字节来更新数组里某个元素的值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> array</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>numbers = array.array(<span class="string">&#x27;h&#x27;</span>, [<span class="number">-2</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>memv = memoryview(numbers) <span class="comment"># 利用含有 5 个短整型有符号整数的数组（类型码是 &#x27;h&#x27;）创建一个 memoryview。</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>len(memv)</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>memv[<span class="number">0</span>]  <span class="comment"># memv 里的 5 个元素跟数组里的没有区别。</span></span><br><span class="line"><span class="number">-2</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>memv_oct = memv.cast(<span class="string">&#x27;B&#x27;</span>)  <span class="comment"># 创建一个 memv_oct，这一次是把 memv 里的内容转换成 &#x27;B&#x27; 类型，也就是无符号字符。</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>memv_oct.tolist()  <span class="comment"># 以列表的形式查看 memv_oct 的内容。</span></span><br><span class="line">[<span class="number">254</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>memv_oct[<span class="number">5</span>] = <span class="number">4</span>  <span class="comment">#把位于位置 5 的字节赋值成 4。</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>numbers</span><br><span class="line">array(<span class="string">&#x27;h&#x27;</span>, [<span class="number">-2</span>, <span class="number">-1</span>, <span class="number">1024</span>, <span class="number">1</span>, <span class="number">2</span>])  <span class="comment"># 因为我们把占 2 个字节的整数的高位字节改成了 4，所以这个有符号整数的值就变成了 1024。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="双向队列和其他形式的队列"><a href="#双向队列和其他形式的队列" class="headerlink" title="双向队列和其他形式的队列"></a>双向队列和其他形式的队列</h3><p>利用 .append 和 .pop 方法，我们可以把列表当作栈或者队列来用（比如，把 .append和 .pop(0) 合起来用，就能模拟栈的“先进先出”的特点）。但是删除列表的第一个元素（抑或是在第一个元素之前添加一个元素）之类的操作是很耗时的，因为这些操作会牵扯到移动列表里的所有元素。</p>
+<p>collections.deque 类（双向队列）是一个线程安全、可以快速从两端添加或者删除元素的数据类型。而且如果想要有一种数据类型来存放“最近用到的几个元素”，deque 也是一个很好的选择。这是因为在新建一个双向队列的时候，你可以指定这个队列的大小，如果这个队列满员了，还可以从反向端删除过期的元素，然后在尾端添加新的元素。</p>
+<p>很多人认为python中的字典是无序的，因为它是按照hash来存储的，<br>但是python中有个模块collections(英文，收集、集合)，里面自带了一个子类<br>OrderedDict，实现了对字典对象中元素的排序。使用OrderedDict会根据放入元素的先后顺序进行排序<br>OrderedDict对象的字典对象，如果其顺序不同那么Python也会把他们当做是两个不同的对象</p>
+
+          
+            <div class='article_footer'>
+              
+                
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+
+
+  
+
+  
+    
+    
+
+<section class="widget copyright  desktop mobile">
+  <div class='content'>
+    
+      <blockquote>
+        
+          
+            <p>博客内容遵循 署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</p>
+
+          
+        
+          
+            <p>本文永久链接是：<a href=http://diudiu6.com/2019/01/24/%E5%BA%8F%E5%88%97%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84/>http://diudiu6.com/2019/01/24/%E5%BA%8F%E5%88%97%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84/</a></p>
+          
+        
+      </blockquote>
+    
+  </div>
+</section>
+
+  
+
+  
+    
+    
+
+<section class="widget qrcode  desktop mobile">
+  
+
+  <div class='content article-entry'>
+    
+  </div>
+</section>
+
+  
+
+
+              
+            </div>
+          
+        </div>
+        
+          
+
+
+  <div class='article-meta' id="bottom">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2020-08-26T13:46:32+08:00">
+  <a class='notlink'>
+    <i class="fas fa-edit fa-fw" aria-hidden="true"></i>
+    <p>更新于：2020年8月26日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="/tags/%E6%B5%81%E7%95%85%E7%9A%84python/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>流畅的python</p></a></div> <div class="new-meta-item meta-tags"><a class="tag" href="/tags/learning/" rel="nofollow"><i class="fas fa-hashtag fa-fw" aria-hidden="true"></i><p>learning</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item wordcount">
+    <a class='notlink'>
+      <i class="fas fa-keyboard fa-fw" aria-hidden="true"></i>
+      <p>字数：6.5k字</p>
+    </a>
+  </div>
+  <div class="new-meta-item readtime">
+    <a class='notlink'>
+      <i class="fas fa-hourglass-half fa-fw" aria-hidden="true"></i>
+      <p>时长：26分钟</p>
+    </a>
+  </div>
+
+
+        
+      
+        
+          
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://diudiu6.com/2019/01/24/%E5%BA%8F%E5%88%97%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84/&title=序列构成的数组 - 知其然，知其所以然&summary=不管是python的哪种数据结构，字符串、列表、字节序列、数组、XML 元素，抑或是数据库查询结果，它们都共用一套丰富的操作：迭代、切片、排序，还有拼接。
+深入理解 Python 中的不同序列类型，不但能让我们避免重新发明轮子，它们的 API 还能帮助我们把自己定义的 API 设计得跟原生的序列一样，或者是跟未来可能出现的序列类型保持兼容。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://diudiu6.com/2019/01/24/%E5%BA%8F%E5%88%97%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84/&title=序列构成的数组 - 知其然，知其所以然&summary=不管是python的哪种数据结构，字符串、列表、字节序列、数组、XML 元素，抑或是数据库查询结果，它们都共用一套丰富的操作：迭代、切片、排序，还有拼接。
+深入理解 Python 中的不同序列类型，不但能让我们避免重新发明轮子，它们的 API 还能帮助我们把自己定义的 API 设计得跟原生的序列一样，或者是跟未来可能出现的序列类型保持兼容。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="" rel="external nofollow noopener noreferrer noopener"
+          
+          target="_blank" href="http://service.weibo.com/share/share.php?url=http://diudiu6.com/2019/01/24/%E5%BA%8F%E5%88%97%E6%9E%84%E6%88%90%E7%9A%84%E6%95%B0%E7%BB%84/&title=序列构成的数组 - 知其然，知其所以然&summary=不管是python的哪种数据结构，字符串、列表、字节序列、数组、XML 元素，抑或是数据库查询结果，它们都共用一套丰富的操作：迭代、切片、排序，还有拼接。
+深入理解 Python 中的不同序列类型，不但能让我们避免重新发明轮子，它们的 API 还能帮助我们把自己定义的 API 设计得跟原生的序列一样，或者是跟未来可能出现的序列类型保持兼容。"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </div>
+
+
+        
+        
+          <div class="prev-next">
+            
+              <a class='prev' href='/2019/01/30/%E5%AD%97%E5%85%B8%E5%92%8C%E9%9B%86%E5%90%88/'>
+                <p class='title'><i class="fas fa-chevron-left" aria-hidden="true"></i>字典和集合</p>
+                <p class='content'>语法：isinstance（object，type）作用：来判断一个对象是否是一个已知的类型。
+其第一个参数（object）为对象，第二个参数（type）为类型名(int…)或类型名的一个列表(...</p>
+              </a>
+            
+            
+          </div>
+        
+      </section>
+    </article>
+  
+
+  
+    
+
+  <article class="post white-box reveal comments shadow">
+    <section class="article typo">
+      <p ct><i class='fas fa-comments'></i> 评论</p>
+      
+      <section id="comments">
+        <div id="valine_container" class="valine_thread">
+  <i class="fas fa-cog fa-spin fa-fw fa-2x"></i>
+</div>
+
+      </section>
+    </section>
+  </article>
+
+
+  
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+</div>
+<aside class='l_side'>
+  
+  
+
+  
+    
+    
+
+
+
+  <section class="widget toc-wrapper shadow desktop mobile" id="toc-div" >
+    
+  <header>
+    
+      <i class="fas fa-list fa-fw" aria-hidden="true"></i><span class='name'>本文目录</span>
+    
+  </header>
+
+
+    <div class='content'>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%BA%8F%E5%88%97%EF%BC%88%E5%AD%98%E6%94%BE%E7%9A%84%E6%98%AF%E5%AE%83%E4%BB%AC%E6%89%80%E5%8C%85%E5%90%AB%E7%9A%84%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%BC%95%E7%94%A8%EF%BC%89"><span class="toc-text">容器序列（存放的是它们所包含的任意类型的对象的引用）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%81%E5%B9%B3%E5%BA%8F%E5%88%97%EF%BC%88%E5%AD%98%E6%94%BE%E7%9A%84%E6%98%AF%E5%80%BC%E8%80%8C%E4%B8%8D%E6%98%AF%E5%BC%95%E7%94%A8%EF%BC%8C%E6%98%AF%E4%B8%80%E6%AE%B5%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4%EF%BC%8C%E6%9B%B4%E5%8A%A0%E7%B4%A7%E5%87%91%EF%BC%8C%E4%BD%86%E6%98%AF%E5%AE%83%E9%87%8C%E9%9D%A2%E5%8F%AA%E8%83%BD%E5%AD%98%E6%94%BE%E8%AF%B8%E5%A6%82%E5%AD%97%E7%AC%A6%E3%80%81%E5%AD%97%E8%8A%82%E5%92%8C%E6%95%B0%E5%80%BC%E8%BF%99%E7%A7%8D%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B%EF%BC%89"><span class="toc-text">扁平序列（存放的是值而不是引用，是一段连续的内存空间，更加紧凑，但是它里面只能存放诸如字符、字节和数值这种基础类型）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%BA%8F%E5%88%97"><span class="toc-text">可变序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%BA%8F%E5%88%97"><span class="toc-text">不可变序列</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A6%81%E5%AD%98%E6%94%BE1000%E4%B8%87%E4%B8%AA%E6%B5%AE%E7%82%B9%E6%95%B0%E6%97%B6%EF%BC%8C%E6%95%B0%E7%BB%84%EF%BC%88array%EF%BC%89%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E5%88%97%E8%A1%A8%EF%BC%88list%EF%BC%89%E9%AB%98%E7%9A%84%E5%A4%9A%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%95%B0%E7%BB%84%E5%9C%A8%E8%83%8C%E5%90%8E%E5%AD%98%E5%9C%A8%E7%9A%84%E5%B9%B6%E4%B8%8D%E6%98%AFfloat%E5%AF%B9%E8%B1%A1%EF%BC%8C%E8%80%8C%E6%98%AF%E6%95%B0%E5%AD%97%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BF%BB%E8%AF%91%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AF%E5%AD%97%E8%8A%82%E8%A1%A8%E8%BF%B0%E3%80%82%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E9%A2%91%E7%B9%81%E5%AF%B9%E5%BA%8F%E5%88%97%E5%81%9A%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BA%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%8Cdeque%EF%BC%88%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97%EF%BC%89%E7%9A%84%E9%80%9F%E5%BA%A6%E5%BA%94%E8%AF%A5%E4%BC%9A%E6%9B%B4%E5%BF%AB%E3%80%82%E5%A6%82%E6%9E%9C%E5%9C%A8%E4%BB%A3%E7%A0%81%E9%87%8C%E5%8C%85%E5%90%AB%E6%93%8D%E4%BD%9C%EF%BC%88%E6%AF%94%E5%A6%82%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%9B%86%E5%90%88%E9%87%8C%EF%BC%89%E7%9A%84%E9%A2%91%E7%8E%87%E5%BE%88%E9%AB%98%EF%BC%8C%E7%94%A8set%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89%E4%BC%9A%E6%9B%B4%E5%90%88%E9%80%82%EF%BC%8C%E4%BD%86%E4%BB%96%E4%B8%8D%E6%98%AF%E5%BA%8F%E5%88%97%EF%BC%8C%E6%98%AF%E6%97%A0%E5%BA%8F%E7%9A%84%E3%80%82"><span class="toc-text">要存放1000万个浮点数时，数组（array）的效率比列表（list）高的多，因为数组在背后存在的并不是float对象，而是数字的机器翻译，也就是字节表述。如果需要频繁对序列做先进先出的操作，deque（双端队列）的速度应该会更快。如果在代码里包含操作（比如检查一个元素是否存在在一个集合里）的频率很高，用set（集合）会更合适，但他不是序列，是无序的。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%EF%BC%88%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E6%98%AF%E4%B8%80%E7%A7%8D%E6%9E%84%E5%BB%BA%E5%88%97%E8%A1%A8%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%8C%E6%98%AF%E6%9E%84%E5%BB%BA%E5%88%97%E8%A1%A8%EF%BC%88list%EF%BC%89%E7%9A%84%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%89"><span class="toc-text">列表推导（列表推导是一种构建列表的方法，是构建列表（list）的快捷方式）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E7%9A%84%E4%BD%9C%E7%94%A8%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA%EF%BC%9A%E7%94%9F%E6%88%90%E5%88%97%E8%A1%A8"><span class="toc-text">列表推导的作用只有一个：生成列表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%88%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E5%88%9B%E5%BB%BA%E5%85%B6%E4%BB%96%E4%BB%BB%E4%BD%95%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BA%8F%E5%88%97%EF%BC%8C%E5%85%B7%E6%9C%89%E7%94%9F%E6%88%90%E5%90%84%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%85%83%E7%B4%A0%E5%B9%B6%E7%94%A8%E5%AE%83%E4%BB%AC%E6%9D%A5%E5%A1%AB%E5%85%85%E5%BA%8F%E5%88%97%E7%9A%84%E5%8A%9F%E8%83%BD%EF%BC%89"><span class="toc-text">生成器表达式（生成器表达式可以用来创建其他任何类型的序列，具有生成各种类型的元素并用它们来填充序列的功能）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E5%99%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%80%90%E4%B8%AA%E4%BA%A7%E7%94%9F%E5%85%83%E7%B4%A0%EF%BC%8C%E4%BB%8E%E6%9D%A5%E4%B8%8D%E4%BC%9A%E4%B8%80%E6%AC%A1%E6%80%A7%E4%BA%A7%E5%87%BA%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E5%88%97%E8%A1%A8"><span class="toc-text">生成器表达式逐个产生元素，从来不会一次性产出一个完整的列表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%BB%84-tuple"><span class="toc-text">元组(tuple)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84%E5%88%97%E8%A1%A8%EF%BC%8C%E5%AE%83%E8%BF%98%E5%8F%AF%E4%BB%A5%E7%94%A8%E4%BA%8E%E6%B2%A1%E6%9C%89%E5%AD%97%E6%AE%B5%E5%90%8D%E7%9A%84%E8%AE%B0%E5%BD%95%E3%80%82%E5%85%83%E7%BB%84%E5%85%B6%E5%AE%9E%E6%98%AF%E5%AF%B9%E6%95%B0%E6%8D%AE%E7%9A%84%E8%AE%B0%E5%BD%95%EF%BC%9A%E5%85%83%E7%BB%84%E4%B8%AD%E7%9A%84%E6%AF%8F%E4%B8%AA%E5%85%83%E7%B4%A0%E9%83%BD%E5%AD%98%E6%94%BE%E4%BA%86%E8%AE%B0%E5%BD%95%E4%B8%AD%E4%B8%80%E4%B8%AA%E5%AD%97%E6%AE%B5%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%A4%96%E5%8A%A0%E8%BF%99%E4%B8%AA%E5%AD%97%E6%AE%B5%E7%9A%84%E4%BD%8D%E7%BD%AE%E3%80%82%E6%AD%A3%E6%98%AF%E8%BF%99%E4%B8%AA%E4%BD%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E7%BB%99%E6%95%B0%E6%8D%AE%E8%B5%8B%E4%BA%88%E4%BA%86%E6%84%8F%E4%B9%89%E3%80%82%E5%A6%82%E6%9E%9C%E6%8A%8A%E5%85%83%E7%BB%84%E5%BD%93%E4%BD%9C%E4%B8%80%E4%BA%9B%E5%AD%97%E6%AE%B5%E7%9A%84%E9%9B%86%E5%90%88%EF%BC%8C%E9%82%A3%E4%B9%88%E6%95%B0%E9%87%8F%E5%92%8C%E4%BD%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E5%B0%B1%E5%8F%98%E5%BE%97%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%E4%BA%86%E5%A6%82%E6%9E%9C%E5%9C%A8%E4%BB%BB%E4%BD%95%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%87%8C%E6%88%91%E4%BB%AC%E5%9C%A8%E5%85%83%E7%BB%84%E5%86%85%E5%AF%B9%E5%85%83%E7%B4%A0%E6%8E%92%E5%BA%8F%EF%BC%8C%E8%BF%99%E4%BA%9B%E5%85%83%E7%B4%A0%E6%89%80%E6%90%BA%E5%B8%A6%E7%9A%84%E4%BF%A1%E6%81%AF%E5%B0%B1%E4%BC%9A%E4%B8%A2%E5%A4%B1%EF%BC%8C%E5%9B%A0%E4%B8%BA%E8%BF%99%E4%BA%9B%E4%BF%A1%E6%81%AF%E6%98%AF%E8%B7%9F%E5%AE%83%E4%BB%AC%E7%9A%84%E4%BD%8D%E7%BD%AE%E6%9C%89%E5%85%B3%E7%9A%84"><span class="toc-text">元组不仅仅是不可变的列表，它还可以用于没有字段名的记录。元组其实是对数据的记录：元组中的每个元素都存放了记录中一个字段的数据，外加这个字段的位置。正是这个位置信息给数据赋予了意义。如果把元组当作一些字段的集合，那么数量和位置信息就变得非常重要了如果在任何的表达式里我们在元组内对元素排序，这些元素所携带的信息就会丢失，因为这些信息是跟它们的位置有关的</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E6%8B%86%E5%8C%85"><span class="toc-text">元组拆包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E5%85%83%E7%BB%84%E6%8B%86%E5%8C%85"><span class="toc-text">嵌套元组拆包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B7%E5%90%8D%E5%85%83%E7%BB%84"><span class="toc-text">具名元组</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E6%88%96%E5%85%83%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E5%B1%9E%E6%80%A7%EF%BC%88%E9%82%A3%E4%BA%9B%E7%94%B1object%E7%B1%BB%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%B9%E6%B3%95%E6%B2%A1%E6%9C%89%E5%88%97%E5%87%BA%E6%9D%A5%EF%BC%89"><span class="toc-text">列表或元组的方法和属性（那些由object类支持的方法没有列出来）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E5%88%87%E7%89%87%E5%BD%A2%E5%BC%8F%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-text">高级切片形式的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%87%E7%89%87%E5%92%8C%E5%8C%BA%E9%97%B4%E4%BC%9A%E5%BF%BD%E7%95%A5%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0"><span class="toc-text">切片和区间会忽略最后一个元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E5%AF%B9%E8%B1%A1%E8%BF%9B%E8%A1%8C%E5%88%87%E7%89%87"><span class="toc-text">对对象进行切片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BB%B4%E5%88%87%E7%89%87%E5%92%8C%E7%9C%81%E7%95%A5"><span class="toc-text">多维切片和省略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Python-%E5%86%85%E7%BD%AE%E7%9A%84%E5%BA%8F%E5%88%97%E7%B1%BB%E5%9E%8B%E9%83%BD%E6%98%AF%E4%B8%80%E7%BB%B4%E7%9A%84%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%AE%83%E4%BB%AC%E5%8F%AA%E6%94%AF%E6%8C%81%E5%8D%95%E4%B8%80%E7%9A%84%E7%B4%A2%E5%BC%95%EF%BC%8C%E6%88%90%E5%AF%B9%E5%87%BA%E7%8E%B0%E7%9A%84%E7%B4%A2%E5%BC%95%E6%98%AF%E6%B2%A1%E6%9C%89%E7%94%A8%E7%9A%84%E3%80%82"><span class="toc-text">Python 内置的序列类型都是一维的，因此它们只支持单一的索引，成对出现的索引是没有用的。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E5%BA%93-NumPy-%E9%87%8C%E5%B0%B1%E7%94%A8%E5%88%B0%E4%BA%86%E8%BF%99%E4%B8%AA%E7%89%B9%E6%80%A7%EF%BC%8C%E4%BA%8C%E7%BB%B4%E7%9A%84-numpy-ndarray-%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%94%A8-a-i-j-%E8%BF%99%E7%A7%8D%E5%BD%A2%E5%BC%8F%E6%9D%A5%E8%8E%B7%E5%8F%96%EF%BC%8C%E6%8A%91%E6%88%96%E6%98%AF%E7%94%A8-a-m-n-k-l-%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9D%A5%E5%BE%97%E5%88%B0%E4%BA%8C%E7%BB%B4%E5%88%87%E7%89%87%E3%80%82"><span class="toc-text">外部库 NumPy 里就用到了这个特性，二维的 numpy.ndarray 就可以用 a[i, j] 这种形式来获取，抑或是用 a[m:n,k:l] 的方式来得到二维切片。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9C%81%E7%95%A5%EF%BC%88ellipsis%EF%BC%89%E7%9A%84%E6%AD%A3%E7%A1%AE%E4%B9%A6%E5%86%99%E6%96%B9%E6%B3%95%E6%98%AF%E4%B8%89%E4%B8%AA%E8%8B%B1%E8%AF%AD%E5%8F%A5%E5%8F%B7%EF%BC%88%E2%80%A6%EF%BC%89%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF-Unicdoe-%E7%A0%81%E4%BD%8D-U-2026%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%8D%8A%E4%B8%AA%E7%9C%81%E7%95%A5%E5%8F%B7%EF%BC%88%E2%80%A6%EF%BC%89"><span class="toc-text">省略（ellipsis）的正确书写方法是三个英语句号（…），而不是 Unicdoe 码位 U+2026表示的半个省略号（…）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%99%E5%88%87%E7%89%87%E8%B5%8B%E5%80%BC"><span class="toc-text">给切片赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%BA%8F%E5%88%97%E4%BD%BF%E7%94%A8-%E5%92%8C"><span class="toc-text">对序列使用+和*</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#append%E6%98%AF%E5%BC%95%E7%94%A8%E4%B8%8D%E6%98%AF%E4%BC%A0%E5%80%BC-%E7%AC%AC%E5%85%AB%E7%AB%A0%E4%BC%9A%E8%AF%B4%E6%98%8E%E5%BC%95%E7%94%A8%E5%92%8C%E5%8F%AF%E5%8F%98%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">append是引用不是传值(第八章会说明引用和可变对象的原理)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%8F%E5%88%97%E7%9A%84%E5%A2%9E%E9%87%8F%E8%B5%8B%E5%80%BC"><span class="toc-text">　序列的增量赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%BA%8F%E5%88%97%E8%BF%9B%E8%A1%8C%E9%87%8D%E5%A4%8D%E6%8B%BC%E6%8E%A5%E6%93%8D%E4%BD%9C%E7%9A%84%E8%AF%9D%EF%BC%8C%E6%95%88%E7%8E%87%E4%BC%9A%E5%BE%88%E4%BD%8E%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%AF%8F%E6%AC%A1%E9%83%BD%E6%9C%89%E4%B8%80%E4%B8%AA%E6%96%B0%E5%AF%B9%E8%B1%A1%EF%BC%8C%E8%80%8C%E8%A7%A3%E9%87%8A%E5%99%A8%E9%9C%80%E8%A6%81%E6%8A%8A%E5%8E%9F%E6%9D%A5%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0%E5%85%88%E5%A4%8D%E5%88%B6%E5%88%B0%E6%96%B0%E7%9A%84%E5%AF%B9%E8%B1%A1%E9%87%8C%EF%BC%8C%E7%84%B6%E5%90%8E%E5%86%8D%E8%BF%BD%E5%8A%A0%E6%96%B0%E7%9A%84%E5%85%83%E7%B4%A0%E3%80%82"><span class="toc-text">对不可变序列进行重复拼接操作的话，效率会很低，因为每次都有一个新对象，而解释器需要把原来对象中的元素先复制到新的对象里，然后再追加新的元素。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#str-%E6%98%AF%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%A4%96%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%AF%B9%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%81%9A-%E5%AE%9E%E5%9C%A8%E6%98%AF%E5%A4%AA%E6%99%AE%E9%81%8D%E4%BA%86%E3%80%82%E4%B8%BA-str-%E5%88%9D%E5%A7%8B%E5%8C%96%E5%86%85%E5%AD%98%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E7%A8%8B%E5%BA%8F%E4%BC%9A%E4%B8%BA%E5%AE%83%E7%95%99%E5%87%BA%E9%A2%9D%E5%A4%96%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E7%A9%BA%E9%97%B4%EF%BC%8C%E5%9B%A0%E6%AD%A4%E8%BF%9B%E8%A1%8C%E5%A2%9E%E9%87%8F%E6%93%8D%E4%BD%9C%E7%9A%84%E6%97%B6%E5%80%99%EF%BC%8C%E5%B9%B6%E4%B8%8D%E4%BC%9A%E6%B6%89%E5%8F%8A%E5%A4%8D%E5%88%B6%E5%8E%9F%E6%9C%89%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%B0%E6%96%B0%E4%BD%8D%E7%BD%AE%E8%BF%99%E7%B1%BB%E6%93%8D%E4%BD%9C%E3%80%82"><span class="toc-text">str 是一个例外，因为对字符串做 +&#x3D; 实在是太普遍了。为 str 初始化内存的时候，程序会为它留出额外的可扩展空间，因此进行增量操作的时候，并不会涉及复制原有字符串到新位置这类操作。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E4%B8%AD%E7%9A%84%E7%A5%9E%E5%A5%87%E9%97%AE%E9%A2%98"><span class="toc-text">元组中的神奇问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E2%80%94%E2%80%94list-sort%E6%96%B9%E6%B3%95%E5%92%8C%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0sorted"><span class="toc-text">排序——list.sort方法和内置函数sorted</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8bisect%E6%9D%A5%E7%AE%A1%E7%90%86%E5%B7%B2%E6%8E%92%E5%BA%8F%E7%9A%84%E5%BA%8F%E5%88%97"><span class="toc-text">用bisect来管理已排序的序列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8bisect%E6%9D%A5%E6%90%9C%E7%B4%A2"><span class="toc-text">用bisect来搜索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8bisect-insort%E6%8F%92%E5%85%A5%E6%96%B0%E5%85%83%E7%B4%A0"><span class="toc-text">用bisect.insort插入新元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B9%E6%8D%AE%E4%B8%80%E4%B8%AA%E5%88%86%E6%95%B0%E6%89%BE%E5%88%B0%E4%BB%96%E6%89%80%E5%AF%B9%E5%BA%94%E7%9A%84%E7%BB%A9%E7%82%B9"><span class="toc-text">根据一个分数找到他所对应的绩点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E7%BB%84array%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">数组array的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E6%B5%AE%E7%82%B9%E5%9E%8B%E6%95%B0%E7%BB%84%E7%9A%84%E5%88%9B%E5%BB%BA%E3%80%81%E5%AD%98%E5%85%A5%E6%96%87%E4%BB%B6%E5%92%8C%E4%BB%8E%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">一个浮点型数组的创建、存入文件和从文件读取的过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E-Python-3-4-%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E4%B8%8D%E5%86%8D%E6%94%AF%E6%8C%81%E8%AF%B8%E5%A6%82-list-sort-%E8%BF%99%E7%A7%8D%E5%B0%B1%E5%9C%B0%E6%8E%92%E5%BA%8F%E6%96%B9%E6%B3%95%E3%80%82%E8%A6%81%E7%BB%99%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F%E7%9A%84%E8%AF%9D%EF%BC%8C%E5%BE%97%E7%94%A8-sorted-%E5%87%BD%E6%95%B0%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%EF%BC%9A"><span class="toc-text">从 Python 3.4 开始，数组类型不再支持诸如 list.sort() 这种就地排序方法。要给数组排序的话，得用 sorted 函数新建一个数组：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E8%A7%86%E5%9B%BE-memoryview"><span class="toc-text">内存视图  memoryview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97%E5%92%8C%E5%85%B6%E4%BB%96%E5%BD%A2%E5%BC%8F%E7%9A%84%E9%98%9F%E5%88%97"><span class="toc-text">双向队列和其他形式的队列</span></a></li></ol>
+    </div>
+  </section>
+
+
+  
+
+
+</aside>
+
+
+
+      </div>
+      
+  
+  <footer class="clearfix">
+    <br><br>
+    
+      
+        <div class="aplayer-container">
+          
+
+  
+    <meting-js
+      theme='#1BCDFC'
+      autoplay='false'
+      volume='0.7'
+      loop='all'
+      order='list'
+      fixed='false'
+      list-max-height='320px'
+      server='netease'
+      type='playlist'
+      id='2857782631'
+      list-folded='true'>
+    </meting-js>
+  
+
+
+        </div>
+      
+    
+      
+        <br>
+        <div class="social-wrapper">
+          
+            
+              <a href="/atom.xml"
+                class="social fas fa-rss flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="mailto:wencheng.qiu@seu.edu.com"
+                class="social fas fa-envelope flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="https://github.com/quzard/"
+                class="social fab fa-github flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+            
+              <a href="https://music.163.com/#/user/home?id=310404458"
+                class="social fas fa-headphones-alt flat-btn"
+                target="_blank"
+                rel="external nofollow noopener noreferrer">
+              </a>
+            
+          
+        </div>
+      
+    
+      
+        <div><p>博客内容遵循 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+      
+    
+      
+        
+          <div><p><span id="lc-sv">本站总访问量为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 次</span> <span id="lc-uv">访客数为 <span id='number'><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span> 人</span></p>
+</div>
+        
+      
+    
+      
+        本站使用
+        <a href="https://github.com/volantis-x/hexo-theme-volantis/tree/3.0.0" target="_blank" class="codename">Volantis</a>
+        作为主题，总访问量为
+          <span id="busuanzi_value_site_pv"><i class="fas fa-circle-notch fa-spin fa-fw" aria-hidden="true"></i></span>
+          次
+        
+      
+    
+      
+        <div class='copyright'>
+        <p><a href="/">Copyright © 2017-2021</a></p>
+
+        </div>
+      
+    
+  </footer>
+
+
+      <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+    </div>
+  </div>
+  <div>
+    
+      
+  
+
+  <div id="rightmenu-wrapper">
+    <ul class="list-v rightmenu" id="rightmenu-content">
+      <li class='option'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-text' onclick='document.execCommand("copy")'><i class='fa fa-copy fa-fw'></i>复制文本</a>
+        <hr id='hr-text'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-href'><i class='fa fa-link fa-fw'></i>复制链接</a>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-open-href'><i class='fa fa-external-link-square-alt fa-fw'></i>在新标签页打开</a>
+        <hr id='hr-href'>
+        <a class='vlts-menu opt fix-cursor-default' id='menu-copy-src'><i class='fa fa-image fa-fw'></i>复制图片地址</a>
+        <hr id='hr-src'>
+      </li>
+      
+        <li class='navigation'>
+          <a class='nav icon-only fix-cursor-default' onclick='history.back()'><i class='fa fa-arrow-left fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' onclick='history.forward()'><i class='fa fa-arrow-right fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' onclick='window.location.reload()'><i class='fa fa-redo fa-fw'></i></a>
+          <a class='nav icon-only fix-cursor-default' href='/'><i class='fa fa-home fa-fw'></i></a>
+        </li>
+      
+      <hr>
+      
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=http://diudiu6.com/categories/
+        
+        
+        
+        
+          id="http:diudiu6comcategories"
+        >
+        <i class='fa fa-fan fa-spin fa-fw'></i> 分类
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=http://diudiu6.com/tags/
+        
+        
+        
+        
+          id="http:diudiu6comtags"
+        >
+        <i class='fa fa-code-branch fa-fw'></i> 标签
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=http://diudiu6.com/archives/
+        
+        
+        
+        
+          id="http:diudiu6comarchives"
+        >
+        <i class='fa fa-rss fa-fw'></i> 归档
+      </a>
+    </li>
+  
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' href=http://diudiu6.com/about/
+        
+        
+        
+        
+          id="http:diudiu6comabout"
+        >
+        <i class='fa fa-question fa-fw'></i> 关于
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          
+    <li>
+      <a class='vlts-menu fix-cursor-default' 
+        
+        
+        
+          onclick="document.execCommand('print')"
+        
+        >
+        <i class='fa fa-print fa-fw'></i> 打印页面
+      </a>
+    </li>
+  
+        
+      
+        
+          <hr>
+        
+      
+        
+          <li class='music name'>
+            <p class='nav music-title fix-cursor-default'></p>
+          </li>
+          <li class='music ctrl'>
+            <a class='nav icon-only backward fix-cursor-default' onclick='aplayerBackward()'><i class='fa fa-step-backward fa-fw'></i></a>
+            <a class='nav icon-only toggle fix-cursor-default' onclick='aplayerToggle()'><i class='fa fa-play fa-fw'></i></a>
+            <a class='nav icon-only forward fix-cursor-default' onclick='aplayerForward()'><i class='fa fa-step-forward fa-fw'></i></a>
+          </li>
+          <li class='music volume'>
+            <a class='nav volume'>
+              <div class="aplayer-volume-bar-wrap">
+                <div class="aplayer-volume-bar fix-cursor-pointer">
+                  <div class="aplayer-volume"></div>
+                  <i class='left fa fa-volume-off fa-fw'></i>
+                  <i class='right fa fa-volume-up fa-fw'></i>
+                </div>
+              </div>
+            </a>
+          </li>
+        
+      
+    </ul>
+  </div>
+
+  <script>
+    window.document.oncontextmenu = function (event) {
+      if (event.ctrlKey) return true;
+      if (/Android|webOS|BlackBerry/i.test(navigator.userAgent)) return true;
+      return popMenu(event);
+    };
+    document.addEventListener("click", function (event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      mymenu.style.display = "none";
+    });
+    function popMenu(event) {
+      var mymenu = document.getElementById('rightmenu-wrapper');
+      var menuContent = document.getElementById('rightmenu-content');
+      var screenWidth = document.documentElement.clientWidth || document.body.clientWidth;
+      var screenHeight = document.documentElement.clientHeight || document.body.clientHeight;
+      mymenu.style.left = event.clientX + "px"; // 获取鼠标位置
+      mymenu.style.top = event.clientY + "px";
+      mymenu.style.display = 'block';
+      if (event.clientX * 2 > screenWidth) {
+        menuContent.classList.add('left');
+      } else {
+        menuContent.classList.remove('left');
+      }
+      if (event.clientY * 2 > screenHeight) {
+        menuContent.classList.add('top');
+      } else {
+        menuContent.classList.remove('top');
+      }
+
+      let hrText = document.getElementById('hr-text');
+      let hrSrc = document.getElementById('hr-src');
+      let hrHref = document.getElementById('hr-href');
+
+      // 选中图片
+      let copySrc = document.getElementById('menu-copy-src');
+      if (copySrc != undefined) {
+        if (event.target.currentSrc) {
+          copySrc.style.display = 'block';
+          copySrc.addEventListener("click", function (e) {
+            copyString(event.target.currentSrc);
+          },{once: true});
+          hrSrc.style.display = 'block';
+        } else {
+          copySrc.style.display = 'none';
+          hrSrc.style.display = 'none';
+        }
+      }
+
+      // 选中按钮
+      // 判断是不是按钮
+      let href = '';
+      if (event.path) {
+        for (i = 0; i < event.path.length; i++) {
+          if (event.path[i].href != undefined && event.path[i].href.length > 0) {
+            href = event.path[i].href;
+          }
+        }
+      }
+
+      let copyText = document.getElementById('menu-copy-text');
+      copyText.style.display = 'none';
+      hrText.style.display = 'none';
+      if (href.length == 0) {
+        // 选中文本
+        if (window.getSelection().toString()) {
+          copyText.style.display = 'block';
+          hrText.style.display = 'block';
+        }
+      }
+
+      // 在新标签页打开
+      let openHref = document.getElementById('menu-open-href');
+      if (openHref != undefined) {
+        if (href.length > 0) {
+          openHref.style.display = 'block';
+          openHref.addEventListener("click", function (e) {
+            window.open(href);
+          },{once: true});
+          hrHref.style.display = 'block';
+        } else {
+          openHref.style.display = 'none';
+          hrHref.style.display = 'none';
+        }
+      }
+      // 复制链接
+      let copyHref = document.getElementById('menu-copy-href');
+      if (copyHref != undefined) {
+        if (href.length > 0) {
+          copyHref.style.display = 'block';
+          copyHref.addEventListener("click", function (e) {
+            copyString(href);
+          },{once: true});
+        } else {
+          copyHref.style.display = 'none';
+        }
+      }
+
+      // 有音乐播放器
+      if (true == true && ('home,categories,tags,archives,about,hr,print,hr,music'||[]).includes('music')) {
+        // 如果有aplayer，初始化一下
+      	try {
+      		checkAPlayer();
+          updateTitle();
+      	} catch (error) {
+      		console.log(error);
+      	}
+      }
+
+      return false; // 该行代码确保系统自带的右键菜单不会被调出
+    }
+    function hideMenu() {
+      document.getElementById('rightmenu-wrapper').style.display = 'none';
+    }
+    function copyString(str) {
+      const input = document.createElement('input');
+      input.setAttribute('readonly', 'readonly');
+      document.body.appendChild(input);
+      input.setAttribute('value', str);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+    }
+    document.execCommand('click');
+  </script>
+
+
+    
+    <!-- required -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5/dist/jquery.min.js"></script>
+
+
+
+<!-- optional -->
+
+  
+  
+  
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script>
+
+    <script type="text/javascript">
+      $(function(){
+        var imgs=["https://ftp.bmp.ovh/imgs/2020/08/ac1d8c082fab038a.jpg"];
+        if ('true' == 'true') {
+          function shuffle(arr){
+            /*From countercurrent-time*/
+            var n = arr.length;
+            while(n--) {
+              var index = Math.floor(Math.random() * n);
+              var temp = arr[index];
+              arr[index] = arr[n];
+              arr[n] = temp;
+            }
+          }
+          shuffle(imgs);
+        }
+        if ('.cover-backstretch') {
+          $('.cover-backstretch').backstretch(
+            imgs,
+          {
+            duration: "10000",
+            fade: "1500"
+          });
+        } else {
+          $.backstretch(
+            imgs,
+          {
+            duration: "10000",
+            fade: "1500"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+  <script>
+  
+  var SEARCH_SERVICE = "hexo" || "hexo";
+  var ROOT = "/" || "/";
+  if (!ROOT.endsWith('/')) ROOT += '/';
+</script>
+
+
+
+
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@2/js/instant_page.js" type="module" defer integrity="sha384-OeDn4XE77tdHo8pGtE1apMPmAipjoxUQ++eeJa6EtJCfHlvijigWiJpD7VDPWXV1"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  function pjax_fancybox() {
+    $(".md").find("img").not('.inline').not('a img').each(function () { //渲染 fancybox
+      var element = document.createElement("a"); // a 标签
+      $(element).attr("class", "fancybox");
+      $(element).attr("pjax-fancybox", "");  // 过滤 pjax
+      $(element).attr("href", $(this).attr("src"));
+      if ($(this).attr("data-original")) {
+        $(element).attr("href", $(this).attr("data-original"));
+      }
+      $(element).attr("data-fancybox", "images");
+      var caption = "";   // 描述信息
+      if ($(this).attr('alt')) {  // 判断当前页面是否存在描述信息
+        $(element).attr('data-caption', $(this).attr('alt'));
+        caption = $(this).attr('alt');
+      }
+      var div = document.createElement("div");
+      $(div).addClass("fancybox");
+      $(this).wrap(div); // 最外层套 div ，其实主要作用还是 class 样式
+      var span = document.createElement("span");
+      $(span).addClass("image-caption");
+      $(span).text(caption); // 加描述
+      $(this).after(span);  // 再套一层描述
+      $(this).wrap(element);  // 最后套 a 标签
+    })
+    $(".article-entry").find("img").fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+      closeClick: true,
+      helpers: {
+        overlay: {closeClick: true}
+      },
+      buttons: [
+        "zoom",
+        "close"
+      ]
+    });
+  };
+  $(function () {
+    pjax_fancybox();
+  });
+</script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+    var clipboard = new ClipboardJS('.btn-copy', {
+        target: function (trigger) {
+            return trigger.nextElementSibling
+        }
+    });
+    function wait(callback, seconds) {
+        var timelag = null;
+        timelag = window.setTimeout(callback, seconds)
+    }
+    function pjax_initCopyCode() {
+        var copyHtml = '';
+        copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+        copyHtml += '<i class="fas fa-copy"></i><span>COPY</span>';
+        copyHtml += '</button>';
+        $(".highlight .code pre").before(copyHtml);
+        $(".article pre code").before(copyHtml);
+        clipboard.off('success').on('success', function (e) {
+            let $btn = $(e.trigger);
+            $btn.addClass('copied');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-check-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPIED';
+            wait(function () {
+                $icon.removeClass('fa-check-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        });
+        clipboard.off('error').on('error', function (e) {
+            e.clearSelection();
+            let $btn = $(e.trigger);
+            $btn.addClass('copy-failed');
+            let $icon = $($btn.find('i'));
+            $icon.removeClass('fa-copy');
+            $icon.addClass('fa-times-circle');
+            let $span = $($btn.find('span'));
+            $span[0].innerText = 'COPY FAILED';
+            wait(function () {
+                $icon.removeClass('fa-times-circle');
+                $icon.addClass('fa-copy');
+                $span[0].innerText = 'COPY'
+            }, 2000)
+        })
+    }
+    $(function () {
+        pjax_initCopyCode()
+    });
+</script>
+
+
+
+   <script src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.6/dist/scrollreveal.min.js"></script>
+<script type="text/javascript">
+  function pjax_scrollrebeal() {
+    ScrollReveal().reveal('.l_main .reveal', {
+      distance: '32px',
+      duration: '800',
+      interval: '20',
+      scale: '1',
+      easing: 'ease-out'
+    });
+  }
+  $(function () {
+    pjax_scrollrebeal();
+  });
+</script>
+
+
+
+
+  <script>
+  let APlayerController = new Object();
+  APlayerController.id = '2857782631';  // 设定全局音乐播放ID
+  APlayerController.volume = '0.7';
+</script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/aplayer@1.10/dist/APlayer.min.js"></script>
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/meting@2.0/dist/Meting.min.js"></script>
+
+
+
+
+  
+<script src="/js/aplayer.js"></script>
+
+
+
+
+
+
+  
+  
+<script src="/js/valine.js"></script>
+
+
+<script>
+  var GUEST_INFO = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link'.split(',').filter(function (item) {
+    return GUEST_INFO.indexOf(item) > -1
+  });
+  var REQUIRED_FIELDS = ['nick', 'mail', 'link'];
+  var requiredFields = 'nick,mail'.split(',').filter(function (item) {
+    return REQUIRED_FIELDS.indexOf(item) > -1
+  });
+
+  function emoji(path, idx, ext) {
+    return path + "/" + path + "-" + idx + "." + ext;
+  }
+
+  var emojiMaps = {};
+  for (var i = 1; i <= 54; i++) {
+    emojiMaps['tieba-' + i] = emoji('tieba', i, 'png');
+  }
+  for (var i = 1; i <= 101; i++) {
+    emojiMaps['qq-' + i] = emoji('qq', i, 'gif');
+  }
+  for (var i = 1; i <= 116; i++) {
+    emojiMaps['aru-' + i] = emoji('aru', i, 'gif');
+  }
+  for (var i = 1; i <= 125; i++) {
+    emojiMaps['twemoji-' + i] = emoji('twemoji', i, 'png');
+  }
+  for (var i = 1; i <= 4; i++) {
+    emojiMaps['weibo-' + i] = emoji('weibo', i, 'png');
+  }
+
+  function pjax_valine() {
+    let pageUrl = $.trim($('#pjax-comment-path').text()) === "none" ? 
+      decodeURI(window.location.pathname) : $.trim($('#pjax-comment-path').text());
+    let pagePlaceholder = $.trim($('#pjax-comment-placeholder').text()) === "none" ?
+      "快来评论吧~" : $.trim($('#pjax-comment-placeholder').text());
+
+    let ALLPATH = '';
+    if(ALLPATH != '') pageUrl = ALLPATH;
+
+    var valine = new Valine();
+    valine.init({
+      el: '#valine_container',
+      meta: meta,
+      placeholder: pagePlaceholder,
+      path: pageUrl,
+      appId: "",
+      appKey: "",
+      pageSize: '10',
+      avatar: 'robohash',
+      lang: 'zh-cn',
+      visitor: 'true',
+      highlight: 'true',
+      mathJax: 'false',
+      enableQQ: 'true',
+      requiredFields: requiredFields,
+      emojiCDN: 'https://cdn.jsdelivr.net/gh/volantis-x/cdn-emoji/valine/',
+      emojiMaps: emojiMaps
+    })
+  }
+
+  $(function () {
+    pjax_valine();
+  });
+</script>
+
+
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js" data-pjax></script>
+
+
+  
+<script src="/js/app.js"></script>
+
+
+
+
+  
+    
+<script src="/js/search.js"></script>
+
+  
+
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+
+  <script type="text/javascript">
+    $(function () {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+
+
+
+
+
+  <script defer>
+
+  const LCCounter = {
+    app_id: 'u9j57bwJod4EDmXWdxrwuqQT-MdYXbMMI',
+    app_key: 'jfHtEKVE24j0IVCGHbvuFClp',
+    custom_api_server: '',
+
+    // 查询存储的记录
+    getRecord(Counter, url, title) {
+      return new Promise(function (resolve, reject) {
+        Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({url})))
+          .then(resp => resp.json())
+          .then(({results, code, error}) => {
+            if (code === 401) {
+              throw error;
+            }
+            if (results && results.length > 0) {
+              var record = results[0];
+              resolve(record);
+            } else {
+              Counter('post', '/classes/Counter', {url, title: title, times: 0})
+                .then(resp => resp.json())
+                .then((record, error) => {
+                  if (error) {
+                    throw error;
+                  }
+                  resolve(record);
+                }).catch(error => {
+                console.error('Failed to create', error);
+                reject(error);
+              });
+            }
+          }).catch((error) => {
+          console.error('LeanCloud Counter Error:', error);
+          reject(error);
+        });
+      })
+    },
+
+    // 发起自增请求
+    increment(Counter, incrArr) {
+      return new Promise(function (resolve, reject) {
+        Counter('post', '/batch', {
+          "requests": incrArr
+        }).then((res) => {
+          res = res.json();
+          if (res.error) {
+            throw res.error;
+          }
+          resolve(res);
+        }).catch((error) => {
+          console.error('Failed to save visitor count', error);
+          reject(error);
+        });
+      });
+    },
+
+    // 构建自增请求体
+    buildIncrement(objectId) {
+      return {
+        "method": "PUT",
+        "path": `/1.1/classes/Counter/${ objectId }`,
+        "body": {
+          "times": {
+            '__op': 'Increment',
+            'amount': 1
+          }
+        }
+      }
+    },
+
+    // 校验是否为有效的 UV
+    validUV() {
+      var key = 'LeanCloudUVTimestamp';
+      var flag = localStorage.getItem(key);
+      if (flag) {
+        // 距离标记小于 24 小时则不计为 UV
+        if (new Date().getTime() - parseInt(flag) <= 86400000) {
+          return false;
+        }
+      }
+      localStorage.setItem(key, new Date().getTime().toString());
+      return true;
+    },
+
+    addCount(Counter) {
+      var enableIncr = '' === 'true' && window.location.hostname !== 'localhost';
+      enableIncr = true;
+      var getterArr = [];
+      var incrArr = [];
+      // 请求 PV 并自增
+      var pvCtn = document.querySelector('#lc-sv');
+      if (pvCtn || enableIncr) {
+        var pvGetter = this.getRecord(Counter, 'http://diudiu6.com' + '/#lc-sv', 'Visits').then((record) => {
+          incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-sv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + 1;
+              if (pvCtn) {
+                pvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(pvGetter);
+      }
+
+      // 请求 UV 并自增
+      var uvCtn = document.querySelector('#lc-uv');
+      if (uvCtn || enableIncr) {
+        var uvGetter = this.getRecord(Counter, 'http://diudiu6.com' + '/#lc-uv', 'Visitors').then((record) => {
+          var vuv = this.validUV();
+          vuv && incrArr.push(this.buildIncrement(record.objectId))
+          var eles = document.querySelectorAll('#lc-uv #number');
+          if (eles.length > 0) {
+            eles.forEach((el,index,array)=>{
+              el.innerText = record.times + (vuv ? 1 : 0);
+              if (uvCtn) {
+                uvCtn.style.display = 'inline';
+              }
+            })
+          }
+        });
+        getterArr.push(uvGetter);
+      }
+
+      // 请求文章的浏览数，如果是当前页面就自增
+      var allPV = document.querySelectorAll('#lc-pv');
+      if (allPV.length > 0 || enableIncr) {
+        for (i = 0; i < allPV.length; i++) {
+          let pv = allPV[i];
+          let title = pv.getAttribute('data-title');
+          var url = 'http://diudiu6.com' + pv.getAttribute('data-path');
+          if (url) {
+            var viewGetter = this.getRecord(Counter, url, title).then((record) => {
+              // 是当前页面就自增
+              if (pv.getAttribute('data-path') == window.location.pathname) {
+                incrArr.push(this.buildIncrement(record.objectId));
+              }
+              if (pv) {
+                var ele = pv.querySelector('#lc-pv #number');
+                if (ele) {
+                  if (pv.getAttribute('data-path') == window.location.pathname) {
+                    ele.innerText = (record.times || 0) + 1;
+                  } else {
+                    ele.innerText = record.times || 0;
+                  }
+                  pv.style.display = 'inline';
+                }
+              }
+            });
+            getterArr.push(viewGetter);
+          }
+        }
+      }
+
+      // 如果启动计数自增，批量发起自增请求
+      if (enableIncr) {
+        Promise.all(getterArr).then(() => {
+          incrArr.length > 0 && this.increment(Counter, incrArr);
+        })
+      }
+
+    },
+
+
+    fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${ api_server }/1.1${ url }`, {
+          method,
+          headers: {
+            'X-LC-Id': this.app_id,
+            'X-LC-Key': this.app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      this.addCount(Counter);
+    },
+
+    refreshCounter() {
+      var api_server = this.app_id.slice(-9) !== '-MdYXbMMI' ? this.custom_api_server : `https://${ this.app_id.slice(0, 8).toLowerCase() }.api.lncldglobal.com`;
+      if (api_server) {
+        this.fetchData(api_server);
+      } else {
+        fetch('https://app-router.leancloud.cn/2/route?appId=' + this.app_id)
+          .then(resp => resp.json())
+          .then(({api_server}) => {
+            this.fetchData('https://' + api_server);
+          });
+      }
+    }
+
+  };
+
+  LCCounter.refreshCounter();
+
+  document.addEventListener('pjax:complete', function () {
+    LCCounter.refreshCounter();
+  });
+</script>
+
+
+
+<!-- more -->
+
+
+    
+      
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script>
+
+<!-- 样式位于：source/css/_third-party/pjaxanimate.styl -->
+
+<div class="pjax-animate">
+  
+    <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
+    <div id="loading-bar-wrapper"><script>NProgress.configure({parent:"#loading-bar-wrapper",trickleSpeed: 100})</script></div>
+    <script>
+      window.ShowLoading = function() {
+        NProgress.start();
+      };
+      window.HideLoading = function() {
+        NProgress.done();
+      }
+    </script>
+  
+</div>
+
+<script>
+    var pjax;
+    document.addEventListener('DOMContentLoaded', function () {
+      pjax = new Pjax({
+        elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"]):not([pjax-fancybox])',
+        selectors: [
+          "title",
+          "#pjax-container",
+          "#pjax-header-nav-list"
+        ],
+        cacheBust: false,   // url 地址追加时间戳，用以避免浏览器缓存
+        timeout: 5000
+      });
+    });
+
+    document.addEventListener('pjax:send', function (e) {
+      window.stop(); // 相当于点击了浏览器的停止按钮
+
+      try {
+        var currentUrl = window.location.pathname;
+        var targetUrl = e.triggerElement.href;
+        var banUrl = [""];
+        if (banUrl[0] != "") {
+          banUrl.forEach(item => {
+            if(currentUrl.indexOf(item) != -1 || targetUrl.indexOf(item) != -1) {
+              window.location.href = targetUrl;
+            }
+          });
+        }
+      } catch (error) {}
+
+      window.subData = null; // 移除标题（用于一二级导航栏切换处）
+      $.fancybox.close();    // 关闭弹窗
+      $('.l_header .switcher .s-search').removeClass('active'); // 关闭移动端激活的搜索框
+      $('.l_header').removeClass('z_search-open'); // 关闭移动端激活的搜索框
+      $('.wrapper').removeClass('sub'); // 跳转页面时关闭二级导航
+
+      // 解绑事件 避免重复监听
+      $('.s-top').unbind('click');
+      $('.menu a').unbind('click');
+      $(window).unbind('resize');
+      $(window).unbind('scroll');
+      $(document).unbind('scroll');
+      $(document).unbind('click');
+      $('body').unbind('click');
+      window.ShowLoading();
+    });
+
+    document.addEventListener('pjax:complete', function () {
+      // 关于百度统计对 SPA 页面的处理：
+      // 方案一：百度统计>管理>单页应用设置中，打开开启按钮即可对SPA进行统计。 https://tongji.baidu.com/web/help/article?id=324
+      // 方案二：取消注释下列代码。 https://tongji.baidu.com/web/help/article?id=235
+      // 
+      // _hmt.push(['_trackPageview', document.location.pathname]);
+      // 
+
+      // 关于谷歌统计对 SPA 页面的处理：
+      // 当应用以动态方式加载内容并更新地址栏中的网址时，也应该更新通过 gtag.js 存储的网页网址。
+      // https://developers.google.cn/analytics/devguides/collection/gtagjs/single-page-applications?hl=zh-cn
+      
+
+      $('.nav-main').find('.list-v').not('.menu-phone').removeAttr("style",""); // 移除小尾巴的移除
+      $('.menu-phone.list-v').removeAttr("style",""); // 移除小尾巴的移除
+      $('script[data-pjax], .pjax-reload script').each(function () {
+        $(this).parent().append($(this).remove());
+      });
+      try{
+        pjax_fancybox();
+        
+          
+          if ('.cover') {
+            $('.cover').backstretch("resize");
+          } else {
+            $.backstretch("resize");
+          }
+        
+        
+        
+          pjax_scrollrebeal();
+        
+        
+          pjax_initCopyCode();
+        
+        
+          pjax_valine();
+        
+        
+        
+        
+        
+      } catch (e) {
+        console.log(e);
+      }
+      window.HideLoading();
+    });
+
+    document.addEventListener('pjax:error', function (e) {
+      window.HideLoading();
+      window.location.href = e.triggerElement.href;
+    });
+</script>
+
+    
+  </div>
+</body>
+</html>
